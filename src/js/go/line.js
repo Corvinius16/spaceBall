@@ -7,7 +7,7 @@ class Line  extends GameObject{
     constructor(Scene,Name,countL){
         super(Scene,Name);  
         let obj = window.container.modelContainer.getModel("platform2").clone();
-        obj.material = window.container.materialContainer.getMaterial("base");
+        obj.material = window.container.materialContainer.getMaterial("base").clone();
         this.start = false;
         this.clasters = 4;
         this.rand = Rand.create();
@@ -74,7 +74,7 @@ class Line  extends GameObject{
     }
 
     createConus(count){
-        let fromX = -1.59;
+        let fromX = -1.6;
         let clustIndex = 0;
         var newClast =0;
         for(let i=0;i<count;i++){
@@ -90,15 +90,19 @@ class Line  extends GameObject{
             const conus = new Conus(this.MainScene,"conus");
             let thConus = conus.getThreeObject();
            
-            thConus.position.x =fromX + this.clastersArray[clustIndex]*0.445*2 + newClast*0.35;
+            thConus.position.x =fromX + this.clastersArray[clustIndex]*0.475*2 + newClast*0.35;
             thConus.position.y = 0.7    ;
             this.getThreeObject().add(thConus);
             newClast++;
         }
         let tS = new addScoreObject(this.MainScene,"scoreObj");
         let tSObj = tS.getThreeObject();
-        tSObj.position.x = fromX + this.clastersArray[this.targetClaster]*0.449*2 + 0.25;
+        tSObj.position.x = fromX + this.clastersArray[this.targetClaster]*0.45*2 + 0.25;
         tSObj.position.y = 0.35;
+
+
+     
+
         this.getThreeObject().add(tSObj);
     }
     SetTimeSync(timeSync){

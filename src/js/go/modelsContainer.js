@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import {GameObject} from "./gameObject";
 import {FBXLoader} from "three/examples/jsm/loaders/FBXLoader"
+import { Box3 } from "three";
 
 class ModelLoader  extends GameObject{
     constructor(Scene,Name){
@@ -34,6 +35,17 @@ class ModelLoader  extends GameObject{
             object.scale.set(1,1,1);
             object.receiveShadow = true;
             object.geometry.computeBoundingBox();
+            object.name="Score";
+            let box = new THREE.Box3();
+            let box2 = new THREE.Box3();
+            box.copy( object.geometry.boundingBox ).applyMatrix4(object.matrixWorld );
+            let c = new THREE.Vector3();
+            let s = new THREE.Vector3();
+            box.getCenter(c);
+            box.getSize(s);
+            s.y = 0.4;
+            box2.setFromCenterAndSize(c,s)
+            object.geometry.newBox = box2;
             thisObj.setModel("aim",object);
         });
     }

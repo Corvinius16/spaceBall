@@ -18,6 +18,7 @@ class MainSphere  extends GameObject{
         this.fromY = 0.5;
         this.toY = 2;
         this.gameOver = gameOver;
+        this.countRotation = 2;
         document.addEventListener("touchstart",this.handleStart.bind(this),false);
         document.addEventListener("touchmove", this.handleMove.bind(this), false);
         document.addEventListener("touchend",this.handleEnd.bind(this),false);
@@ -26,7 +27,7 @@ class MainSphere  extends GameObject{
 
     completeInit(){
         let obj = window.container.modelContainer.getModel("ball");
-        obj.material = window.container.materialContainer.getMaterial("base");
+        obj.material = window.container.materialContainer.getMaterial("base").clone();
         this.setThreeObject(obj);
         this.MainScene.addObject(this);
     }
@@ -53,7 +54,13 @@ class MainSphere  extends GameObject{
 
     }
     update(){
-
+        let curr = this.object.position.x - (-1.3);
+        let perc = curr/2.6;
+        
+        let cameraMinX = -0.6;
+        let cameraMaxX = 0.6;
+        let val = this.lerp(cameraMinX,cameraMaxX,perc);
+        this.MainScene.getMainCamera().getThreeObject().position.x = val;
      }
 
     sync(valueLerp){
@@ -71,40 +78,43 @@ class MainSphere  extends GameObject{
         if(valueLerp == 1){
             this.Score.addScore(1);
         }
+        let rotation = this.lerp(0,360,valueLerp);
+        this.getThreeObject().rotation.x = -THREE.MathUtils.degToRad(rotation);
+
         // if(valueLerp>0.7)
         // {
             let coll = false;
-            // if(this.line!=undefined){
-            //     const box = new THREE.Box3();
-            //     box.copy( this.getThreeObject().geometry.boundingBox ).applyMatrix4( this.getThreeObject().matrixWorld );
-            //     this.line.getThreeObject().children.forEach(el=>{
-            //     if(el.name != "Score")
-            //     {
-            //         let box2 = new THREE.Box3();
-            //         box2.copy( el.geometry.boundingBox ).applyMatrix4(el.matrixWorld );
-            //         var collision = box.intersectsBox (box2);
-            //         if(collision){
-            //             coll = true;
-            //         }
-            //     }
-            //     else{
-            //         if(!el.isUsed)
-            //         {
-            //             let box2 = new THREE.Box3();
-            //             box2.copy( el.boxCol ).applyMatrix4(el.matrixWorld );
-            //             var collision = box.intersectsBox (box2);
-            //             if(collision){
-            //                 el.isUsed = true;
-            //                 // let textSc = new TextScore(this.MainScene,"text","5",this.getThreeObject().position);
-            //                 // this.MainScene.addObject(textSc);
-            //                 this.Score.addScore(5);
-            //             }
+            if(this.line!=undefined){
+                const box = new THREE.Box3();
+                box.copy( this.getThreeObject().geometry.boundingBox ).applyMatrix4( this.getThreeObject().matrixWorld );
+                this.line.getThreeObject().children.forEach(el=>{
+                if(el.name != "Score")
+                {
+                    let box2 = new THREE.Box3();
+                    box2.copy( el.geometry.boundingBox ).applyMatrix4(el.matrixWorld );
+                    var collision = box.intersectsBox (box2);
+                    if(collision){
+                        coll = true;
+                    }
+                }
+                else{
+                    if(!el.isUsed)
+                    {
+                        let box2 = new THREE.Box3();
+                        box2.copy( el.geometry.newBox ).applyMatrix4(el.matrixWorld );
+                        var collision = box.intersectsBox (box2);
+                        if(collision){
+                            el.isUsed = true;
+                            // let textSc = new TextScore(this.MainScene,"text","5",this.getThreeObject().position);
+                            // this.MainScene.addObject(textSc);
+                            this.Score.addScore(5);
+                        }
                   
-            //         }
-            //     }
-            //     })
+                    }
+                }
+                })
                 
-            // }
+            }
 
             if(coll){
                 this.gameOver();
@@ -144,7 +154,10 @@ class MainSphere  extends GameObject{
          this.pos.copy(this.newPos);
         if(this.move){
             if(this.object.position.x+this.delta>-1.3 && this.object.position.x+this.delta<1.3)
-            this.object.position.x +=this.delta;
+            {
+                 this.object.position.x +=this.delta;
+            }
+           
         }
     }
 }

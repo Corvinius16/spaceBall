@@ -19,7 +19,6 @@
   "dependencies": {
     "lodash": "^4.17.20",
     "random-seed": "^0.3.0",
-    "stats.js": "^0.17.0",
     "three": "^0.125.2",
     "uuid": "^8.3.2"
   }

@@ -21,7 +21,7 @@ class TimeSync  extends GameObject{
     update(){
         if(this.start)
         {
-
+            let upd = false;
             if(this.timeElapsed<this.time){
                 this.valueLerp = this.lerp(0,1,this.timeElapsed/this.time);
                 this.timeElapsed+=this.MainScene.getDeltaTime();
@@ -29,11 +29,15 @@ class TimeSync  extends GameObject{
             else{
                 this.timeElapsed = 0;
                 this.valueLerp = 1;
-
+                upd = true;
             }
             this.objects.forEach(el=>{
                 el.sync(this.valueLerp);
             })
+            if(upd){
+                this.update();
+            }
+            
         }
     }
 

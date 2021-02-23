@@ -1,6 +1,5 @@
 import * as THREE from 'three';
 import {MainCamera} from "./go/mainCamera";
-import * as Stats from "stats.js";
 let background = new THREE.Color('#55b3f1');
 
 
@@ -20,26 +19,27 @@ class MainScene {
         var clock = new THREE.Clock();
         this.deltaTime = 0;
 
-        var stats = new Stats();
-        stats.showPanel( 0 ); // 0: fps, 1: ms, 2: mb, 3+: custom
-        document.body.appendChild( stats.dom );
-
+      
+        // thisScene.renderer.debug.checkShaderErrors=false;
 
         function animate(now) {
-            stats.begin();
-
+         
 	// monitored code goes here
 
 	
             requestAnimationFrame( animate );
             let delta = clock.getDelta();
+            if(delta>0.025)
+            {
+            console.log(delta);
+            }
             thisScene.deltaTime = delta;
             thisScene.gameObjects.forEach(el=>{
                 el.update();
             });
             
            thisScene.renderer.render( thisScene.scene, thisScene.getMainCamera().getThreeObject());
-           stats.end();
+         
         }
         requestAnimationFrame( animate );
 

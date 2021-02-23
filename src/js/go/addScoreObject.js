@@ -7,10 +7,9 @@ class addScoreObject  extends GameObject{
         let conus = window.container.modelContainer.getModel("aim").clone();
         conus.material = window.container.materialContainer.getMaterial("aim");      
         conus.position.set(-100,0,0);
-
         this.setThreeObject(conus);
       
-
+     
 
       
        
