@@ -1,37 +1,38 @@
 import * as THREE from "three";
 import {GameObject} from "./gameObject";
-import {FBXLoader} from "three/examples/jsm/loaders/FBXLoader"
-import { Box3 } from "three";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
 class ModelLoader  extends GameObject{
     constructor(Scene,Name){
         super(Scene,Name);
         this.models = new Map();
         this.count = 0;
-        const loader = new FBXLoader();
+        const loader2 = new GLTFLoader();
+
         let thisObj = this;
-        loader.load("models/Ball.fbx",function(obj){
-            let object=obj.children[0];//new THREE.InstancedMesh(obj.children[0].geometry,new THREE.MeshBasicMaterial(),100);
+        loader2.load("models/Platform.glb",function(obj){
+            let object=obj.scene.children[0].children[0];//new THREE.InstancedMesh(obj.children[0].geometry,new THREE.MeshBasicMaterial(),100);
+            object.scale.set(1,1,1);
+            object.receiveShadow = true;
+            thisObj.setModel("platform2",object);
+        });
+        loader2.load("models/Ball.glb",function(obj){
+         
+            let object=obj.scene.children[0].children[0];//new THREE.InstancedMesh(obj.children[0].geometry,new THREE.MeshBasicMaterial(),100);
             object.castShadow = true;
             object.geometry.computeBoundingBox();
             thisObj.setModel("ball",object);
          
         });
-        loader.load("models/Platform.fbx",function(obj){
-            let object=obj.children[0];//new THREE.InstancedMesh(obj.children[0].geometry,new THREE.MeshBasicMaterial(),100);
+        loader2.load("models/Barrier.glb",function(obj){
+            let object=obj.scene.children[0].children[0];//new THREE.InstancedMesh(obj.children[0].geometry,new THREE.MeshBasicMaterial(),100);
             object.scale.set(1,1,1);
             object.receiveShadow = true;
-            thisObj.setModel("platform2",object);
-        });
-        loader.load("models/Barrier.fbx",function(obj){
-            let object  =obj.children[0];//new THREE.InstancedMesh(obj.children[0].geometry,new THREE.MeshBasicMaterial(),100);
-            object.scale.set(1,1,1);
-            object.receiveShadow = true;
-          object.geometry.computeBoundingBox();
+           object.geometry.computeBoundingBox();
             thisObj.setModel("barr",object);
         });
-        loader.load("models/Aim.fbx",function(obj){
-            let object=obj.children[0];//new THREE.InstancedMesh(obj.children[0].geometry,new THREE.MeshBasicMaterial(),100);
+        loader2.load("models/Aim.glb",function(obj){
+            let object=obj.scene.children[0].children[0];//new THREE.InstancedMesh(obj.children[0].geometry,new THREE.MeshBasicMaterial(),100);
             object.scale.set(1,1,1);
             object.receiveShadow = true;
             object.geometry.computeBoundingBox();

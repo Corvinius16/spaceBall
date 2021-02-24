@@ -23,17 +23,20 @@ class MainScene {
         this.setMainCamera(new MainCamera(this,"MainCamera"));
         this.gameObjects = [];
         this.gameObjects.push(this.camera);
-        this.renderer.setSize( window.innerWidth, window.innerHeight );
+        //this.renderer.setPixelRatio( window.devicePixelRatio );
+        this.renderer.setSize( window.innerWidth , window.innerHeight );
+        
         document.body.appendChild(this.renderer.domElement);
         var clock = new THREE.Clock();
         this.deltaTime = 0;
         this.renderer.info.autoReset = false;
         this.composer =new EffectComposer(this.renderer);
-        this.composer.setSize( window.innerWidth, window.innerHeight)
+        // this.composer.setPixelRatio( window.devicePixelRatio );
+        this.composer.setSize( window.innerWidth/2, window.innerHeight/2)
         const renderPass = new RenderPass(this.scene, this.getMainCamera().getThreeObject());
         this.composer.addPass( renderPass );
         
-        const bloom = new UnrealBloomPass(new THREE.Vector2(window.innerWidth,window.innerHeight),1,0.4,0.85);;
+        const bloom = new UnrealBloomPass(new THREE.Vector2(window.innerWidth/2,window.innerHeight/2),1,0.4,0.85);;
         this.composer.addPass( bloom );
         // thisScene.renderer.debug.checkShaderErrors=false;
 
@@ -48,7 +51,7 @@ class MainScene {
             });
             thisScene.composer.render();
             
-             console.log(thisScene.renderer.info.render.calls);
+            //  console.log(thisScene.renderer.info.render.calls);
         //    thisScene.renderer.render( thisScene.scene, thisScene.getMainCamera().getThreeObject());
          
         }
@@ -87,10 +90,10 @@ class MainScene {
     }
 
     getDeltaTime(){
-        if(this.deltaTime > 0.0167)
-        {
-            this.deltaTime = 0.0167;
-        }
+        // if(this.deltaTime > 0.0167)
+        // {
+        //     this.deltaTime = 0.0167;
+        // }
         return this.deltaTime;
     }
 
