@@ -100,7 +100,7 @@ function InitPositions(){
     line.startMove();
     scene.addObject(line);
     timeSync.addObject(line);
-    for (var i = 1; i<9; i++) {
+    for (var i = 1; i<5; i++) {
         let line = new Line(scene,"line",i);
         line.sphere = sphere;
         line.SetTimeSync(timeSync);

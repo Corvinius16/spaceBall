@@ -11,27 +11,27 @@ class ModelLoader  extends GameObject{
         const loader = new FBXLoader();
         let thisObj = this;
         loader.load("models/Ball.fbx",function(obj){
-            let object=obj.children[0];
+            let object=obj.children[0];//new THREE.InstancedMesh(obj.children[0].geometry,new THREE.MeshBasicMaterial(),100);
             object.castShadow = true;
             object.geometry.computeBoundingBox();
             thisObj.setModel("ball",object);
          
         });
         loader.load("models/Platform.fbx",function(obj){
-            let object=obj.children[0];
+            let object=obj.children[0];//new THREE.InstancedMesh(obj.children[0].geometry,new THREE.MeshBasicMaterial(),100);
             object.scale.set(1,1,1);
             object.receiveShadow = true;
             thisObj.setModel("platform2",object);
         });
         loader.load("models/Barrier.fbx",function(obj){
-            let object=obj.children[0];
+            let object  =obj.children[0];//new THREE.InstancedMesh(obj.children[0].geometry,new THREE.MeshBasicMaterial(),100);
             object.scale.set(1,1,1);
             object.receiveShadow = true;
           object.geometry.computeBoundingBox();
             thisObj.setModel("barr",object);
         });
         loader.load("models/Aim.fbx",function(obj){
-            let object=obj.children[0];
+            let object=obj.children[0];//new THREE.InstancedMesh(obj.children[0].geometry,new THREE.MeshBasicMaterial(),100);
             object.scale.set(1,1,1);
             object.receiveShadow = true;
             object.geometry.computeBoundingBox();

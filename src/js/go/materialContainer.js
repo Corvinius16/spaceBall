@@ -39,6 +39,7 @@ class MaterialLoader  extends GameObject{
         let sphereMaterial = new THREE.MeshStandardMaterial({
             emissiveMap: this.getTexture("emmisive"),
             emissive: "#ffffff",
+            emissiveIntensity: 2,
             map: this.getTexture("base"),
             metalnessMap: this.getTexture("met"),
             roughnessMap: this.getTexture("rough"),
@@ -46,8 +47,18 @@ class MaterialLoader  extends GameObject{
         })
         this.materials.set("base",sphereMaterial);
         let aimMat = new THREE.MeshLambertMaterial({
-            color: "#ffff00"
+            color: "#ffff00",
+            emissive: "#ffff00",
+            emissiveIntensity: 0.7
+
         });
+        let testMat= new THREE.MeshLambertMaterial({
+            emissiveMap: this.getTexture("emmisive"),
+            emissive: "#ffffff",
+            emissiveIntensity: 2,
+            map: this.getTexture("base"),
+        });
+        this.materials.set("test",testMat);
         this.materials.set("aim",aimMat);
         this.loadComplete();
     }

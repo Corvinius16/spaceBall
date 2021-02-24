@@ -11,8 +11,8 @@ class LineFabric  extends GameObject{
     }
     
     startSync(){
-        let line = new Line(this.MainScene,"line",9);
-        line.getThreeObject().position.set(0,-0.3+0.5*9,0-2.5*9);
+        let line = new Line(this.MainScene,"line",5);
+        line.getThreeObject().position.set(0,-0.3+0.5*5,0-2.5*5);
         line.startMove();
         line.sphere = this.sphere;
         line.SetTimeSync(this.TimeSync);
@@ -40,9 +40,9 @@ class LineFabric  extends GameObject{
     }
     sync(valueLerp){
         if(valueLerp === 1){
-            let line = new Line(this.MainScene,"line",9);
+            let line = new Line(this.MainScene,"line",5);
             line.sphere = this.sphere;
-            line.getThreeObject().position.set(0,-0.3+0.5*9,0-2.5*9);
+            line.getThreeObject().position.set(0,-0.3+0.5*5,0-2.5*5);
             line.startMove();
             line.SetTimeSync(this.TimeSync);
             let count = this.random(3);

@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 
 let color = 0xffffff;
-let intencity = 1;
+let intencity = 0.3;
 
 function createDirectionalLight(){
     const light = new THREE.DirectionalLight( color,intencity); // soft white light

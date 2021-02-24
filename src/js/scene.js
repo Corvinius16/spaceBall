@@ -1,6 +1,12 @@
 import * as THREE from 'three';
 import {MainCamera} from "./go/mainCamera";
-let background = new THREE.Color('#55b3f1');
+
+
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
+
+let background = new THREE.Color('#151515');
 
 
 class MainScene {
@@ -8,7 +14,10 @@ class MainScene {
         let thisScene = this;
         this.scene = new THREE.Scene();
         this.scene.background = background;
-        this.renderer = new THREE.WebGLRenderer();
+        this.renderer = new THREE.WebGLRenderer({
+            antialias: false,
+            powerPreference: "high-performance",
+        });
         this.renderer.shadowMap.enabled = true;
         this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         this.setMainCamera(new MainCamera(this,"MainCamera"));
@@ -18,27 +27,29 @@ class MainScene {
         document.body.appendChild(this.renderer.domElement);
         var clock = new THREE.Clock();
         this.deltaTime = 0;
-
-      
+        this.renderer.info.autoReset = false;
+        this.composer =new EffectComposer(this.renderer);
+        this.composer.setSize( window.innerWidth, window.innerHeight)
+        const renderPass = new RenderPass(this.scene, this.getMainCamera().getThreeObject());
+        this.composer.addPass( renderPass );
+        
+        const bloom = new UnrealBloomPass(new THREE.Vector2(window.innerWidth,window.innerHeight),1,0.4,0.85);;
+        this.composer.addPass( bloom );
         // thisScene.renderer.debug.checkShaderErrors=false;
 
         function animate(now) {
-         
-	// monitored code goes here
-
-	
             requestAnimationFrame( animate );
+            
+            thisScene.renderer.info.reset();
             let delta = clock.getDelta();
-            if(delta>0.025)
-            {
-            console.log(delta);
-            }
             thisScene.deltaTime = delta;
             thisScene.gameObjects.forEach(el=>{
                 el.update();
             });
+            thisScene.composer.render();
             
-           thisScene.renderer.render( thisScene.scene, thisScene.getMainCamera().getThreeObject());
+             console.log(thisScene.renderer.info.render.calls);
+        //    thisScene.renderer.render( thisScene.scene, thisScene.getMainCamera().getThreeObject());
          
         }
         requestAnimationFrame( animate );
@@ -70,7 +81,7 @@ class MainScene {
         var removeIndex = this.gameObjects.map(function(item) { return item.uuid; }).indexOf(go.uuid);
         this.gameObjects.splice(removeIndex, 1);
         go.getThreeObject().geometry.dispose();
-        go.getThreeObject().material.dispose();
+         go.getThreeObject().material.dispose();
         this.scene.remove(go.getThreeObject());
         go = null;
     }

@@ -26,8 +26,8 @@ class MainSphere  extends GameObject{
     }
 
     completeInit(){
-        let obj = window.container.modelContainer.getModel("ball");
-        obj.material = window.container.materialContainer.getMaterial("base").clone();
+        let obj = window.container.modelContainer.getModel("ball").clone();
+        obj.material = window.container.materialContainer.getMaterial("test").clone();
         this.setThreeObject(obj);
         this.MainScene.addObject(this);
     }
@@ -54,8 +54,8 @@ class MainSphere  extends GameObject{
 
     }
     update(){
-        let curr = this.object.position.x - (-1.3);
-        let perc = curr/2.6;
+        let curr = this.object.position.x - (-1.35);
+        let perc = curr/2.7;
         
         let cameraMinX = -0.6;
         let cameraMaxX = 0.6;
@@ -153,7 +153,7 @@ class MainSphere  extends GameObject{
         }
          this.pos.copy(this.newPos);
         if(this.move){
-            if(this.object.position.x+this.delta>-1.3 && this.object.position.x+this.delta<1.3)
+            if(this.object.position.x+this.delta>-1.35 && this.object.position.x+this.delta<1.35)
             {
                  this.object.position.x +=this.delta;
             }

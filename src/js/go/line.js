@@ -7,13 +7,14 @@ class Line  extends GameObject{
     constructor(Scene,Name,countL){
         super(Scene,Name);  
         let obj = window.container.modelContainer.getModel("platform2").clone();
-        obj.material = window.container.materialContainer.getMaterial("base").clone();
+        obj.material = window.container.materialContainer.getMaterial("test").clone();
         this.start = false;
         this.clasters = 4;
         this.rand = Rand.create();
         this.targetClaster = this.rand(0,this.clasters+1);
         this.clastersArray =[0,1,2,3];
         this.isAdd = false;
+        this.conus = [];
         this.countLine = countL;
         this.shuffle(this.clastersArray);
         this.setThreeObject(obj);
@@ -32,6 +33,9 @@ class Line  extends GameObject{
        if(this.getThreeObject().position.z>2.5){
            this.Destroy();
        }
+       this.conus.forEach(el=>{
+        el.update();
+    })
     }
 
     sync(valueLerp){
@@ -57,6 +61,9 @@ class Line  extends GameObject{
                 }
              }
         }
+        this.conus.forEach(el=>{
+            el.sync(valueLerp);
+        })
         this.setPosition(valueLerp);
     }
 
@@ -88,6 +95,7 @@ class Line  extends GameObject{
                 newClast = 0;
             }
             const conus = new Conus(this.MainScene,"conus");
+            this.conus.push(conus);
             let thConus = conus.getThreeObject();
            
             thConus.position.x =fromX + this.clastersArray[clustIndex]*0.475*2 + newClast*0.35;
