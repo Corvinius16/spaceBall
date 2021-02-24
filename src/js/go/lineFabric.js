@@ -11,14 +11,14 @@ class LineFabric  extends GameObject{
     }
     
     startSync(){
-        let line = new Line(this.MainScene,"line",5);
+        let count =this.random(3);
+        let count2 = this.randomLineByValue(count);
+        let line = new Line(this.MainScene,"line",5,count2);
         line.getThreeObject().position.set(0,-0.3+0.5*5,0-2.5*5);
         line.startMove();
         line.sphere = this.sphere;
         line.SetTimeSync(this.TimeSync);
-        let count =this.random(3);
-        let count2 = this.randomLineByValue(count);
-        line.createConus(count2);
+    
         this.MainScene.addObject(line);
         this.TimeSync.addObject(line);
     }
@@ -40,14 +40,13 @@ class LineFabric  extends GameObject{
     }
     sync(valueLerp){
         if(valueLerp === 1){
-            let line = new Line(this.MainScene,"line",5);
+            let count = this.random(3);
+            let count2 = this.randomLineByValue(count);
+            let line = new Line(this.MainScene,"line",5,count2);
             line.sphere = this.sphere;
             line.getThreeObject().position.set(0,-0.3+0.5*5,0-2.5*5);
             line.startMove();
             line.SetTimeSync(this.TimeSync);
-            let count = this.random(3);
-            let count2 = this.randomLineByValue(count);
-            line.createConus(count2);
             this.MainScene.addObject(line);
             this.TimeSync.addObject(line);
         }

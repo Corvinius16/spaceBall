@@ -15,6 +15,7 @@ import {FontLoader} from "./js/go/fontLoader";
 import {Container} from "./js/go/Container";
 import {ModelLoader} from "./js/go/modelsContainer";
 import {MaterialLoader} from "./js/go/materialContainer";
+import {LineArray} from "./js/go/LineArray";
 let scene = new MainScene();
 let timeSync;
 let lineFabric;
@@ -61,7 +62,7 @@ function initStartGameObjects(){
     timeSync.addObject(sphere);
     lineFabric.sphere = sphere;
   //  loader.addObject(fontLoader);
-   // loader.addObject(sphere);
+    // loader.addObject(sphere);
     loader.addObject(modelContainer);
     loader.addObject(materialContainer);
     let light = new AmbientLight(scene,"AmbientLight");
@@ -101,14 +102,15 @@ function InitPositions(){
     scene.addObject(line);
     timeSync.addObject(line);
     for (var i = 1; i<5; i++) {
-        let line = new Line(scene,"line",i);
+        let countC = 0;
+        if(i>2){
+           countC = 2;
+        }
+        let line = new Line(scene,"line",i,countC);
         line.sphere = sphere;
         line.SetTimeSync(timeSync);
         line.getThreeObject().position.set(0,-0.3+0.5*i,0-2.5*i);
         line.startMove();
-        if(i>3){
-            line.createConus(2);
-        }
         scene.addObject(line);
         timeSync.addObject(line);
     }

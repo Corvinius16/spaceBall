@@ -4,8 +4,9 @@ import {MainCamera} from "./go/mainCamera";
 
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
-import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
-
+import { BloomPass } from 'three/examples/jsm/postprocessing/BloomPass.js';
+import {ShaderPass} from 'three/examples/jsm/postprocessing/ShaderPass';
+import {CopyShader} from 'three/examples/jsm/shaders/CopyShader';
 let background = new THREE.Color('#151515');
 
 
@@ -23,36 +24,45 @@ class MainScene {
         this.setMainCamera(new MainCamera(this,"MainCamera"));
         this.gameObjects = [];
         this.gameObjects.push(this.camera);
-        //this.renderer.setPixelRatio( window.devicePixelRatio );
-        this.renderer.setSize( window.innerWidth , window.innerHeight );
+        this.renderer.setPixelRatio( 0.5 );
+        this.renderer.setSize( window.innerWidth, window.innerHeight);
         
         document.body.appendChild(this.renderer.domElement);
         var clock = new THREE.Clock();
         this.deltaTime = 0;
-        this.renderer.info.autoReset = false;
-        this.composer =new EffectComposer(this.renderer);
-        // this.composer.setPixelRatio( window.devicePixelRatio );
-        this.composer.setSize( window.innerWidth/2, window.innerHeight/2)
-        const renderPass = new RenderPass(this.scene, this.getMainCamera().getThreeObject());
-        this.composer.addPass( renderPass );
+        // this.renderer.info.autoReset = false;
+        // this.composer =new EffectComposer(this.renderer);
+        // this.composer.setPixelRatio( 0.5 );
+        // this.composer.setSize( window.innerWidth, window.innerHeight)
+        // const renderPass = new RenderPass(this.scene, this.getMainCamera().getThreeObject());
+        // this.composer.addPass( renderPass );
         
-        const bloom = new UnrealBloomPass(new THREE.Vector2(window.innerWidth/2,window.innerHeight/2),1,0.4,0.85);;
-        this.composer.addPass( bloom );
-        // thisScene.renderer.debug.checkShaderErrors=false;
+        // const bloom = new BloomPass(0.7, 30, 4,256);
+        // this.composer.addPass( bloom );
 
-        function animate(now) {
+
+        // let effectCopy = new ShaderPass( CopyShader );
+        // this.composer.addPass( effectCopy );
+        
+        // effectCopy.renderToScreen = true;
+
+        // this.renderer.autoClear = false;
+        // // thisScene.renderer.debug.checkShaderErrors=false;
+
+        function animate() {
             requestAnimationFrame( animate );
             
-            thisScene.renderer.info.reset();
+            // thisScene.renderer.info.reset();
             let delta = clock.getDelta();
             thisScene.deltaTime = delta;
             thisScene.gameObjects.forEach(el=>{
-                el.update();
+               el.update();
             });
-            thisScene.composer.render();
-            
-            //  console.log(thisScene.renderer.info.render.calls);
-        //    thisScene.renderer.render( thisScene.scene, thisScene.getMainCamera().getThreeObject());
+            // thisScene.renderer.render();
+            // thisScene.renderer.clear();
+            // thisScene.composer.render();
+              console.log(thisScene.renderer.info.render.calls);
+         thisScene.renderer.render( thisScene.scene, thisScene.getMainCamera().getThreeObject());
          
         }
         requestAnimationFrame( animate );
@@ -84,7 +94,15 @@ class MainScene {
         var removeIndex = this.gameObjects.map(function(item) { return item.uuid; }).indexOf(go.uuid);
         this.gameObjects.splice(removeIndex, 1);
         go.getThreeObject().geometry.dispose();
-         go.getThreeObject().material.dispose();
+        if(Array.isArray(go.getThreeObject().material)){
+            go.getThreeObject().material.forEach(el=>{
+                el.dispose();
+            })
+        }
+        else{
+            go.getThreeObject().material.dispose();
+        }
+        
         this.scene.remove(go.getThreeObject());
         go = null;
     }

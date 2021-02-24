@@ -49,10 +49,10 @@ class MaterialLoader  extends GameObject{
         let aimMat = new THREE.MeshLambertMaterial({
             color: "#ffff00",
             emissive: "#ffff00",
-            emissiveIntensity: 0.7
+            emissiveIntensity: 5
 
         });
-        let testMat= new THREE.MeshLambertMaterial({
+        let testMat= new THREE.MeshStandardMaterial({
             emissiveMap: this.getTexture("emmisive"),
             emissive: "#ffffff",
             emissiveIntensity: 2,

@@ -16,24 +16,24 @@ class Conus  extends GameObject{
 
     }
     update(){
-        this.rotation +=this.MainScene.getDeltaTime() * 50;
-        this.getThreeObject().rotation.y = -THREE.MathUtils.degToRad(this.rotation);
-        if(this.dir)
-        {
-            this.LerpY+=this.MainScene.getDeltaTime();
-            if(this.LerpY>=1){
-                this.dir =false;
-                this.LerpY = 1;
-            }
-        }
-        else{
-            this.LerpY-=this.MainScene.getDeltaTime();
-            if(this.LerpY<=0){
-                this.LerpY = 0;
-                this.dir = true;
-            }
-        }
-        this.getThreeObject().position.y = this.lerp(this.fromY,this.toY,this.LerpY);
+        // this.rotation +=this.MainScene.getDeltaTime() * 50;
+        // this.getThreeObject().rotation.y = -THREE.MathUtils.degToRad(this.rotation);
+        // if(this.dir)
+        // {
+        //     this.LerpY+=this.MainScene.getDeltaTime();
+        //     if(this.LerpY>=1){
+        //         this.dir =false;
+        //         this.LerpY = 1;
+        //     }
+        // }
+        // else{
+        //     this.LerpY-=this.MainScene.getDeltaTime();
+        //     if(this.LerpY<=0){
+        //         this.LerpY = 0;
+        //         this.dir = true;
+        //     }
+        // }
+        // this.getThreeObject().position.y = this.lerp(this.fromY,this.toY,this.LerpY);
     }
     sync(value){
         // if(value<0.5){

@@ -7,7 +7,7 @@ class Score  extends GameObject{
         this.score = 0;
     }
     update(){
-        this.updateHTML()
+        //this.updateHTML()
     }
 
     addScore(count){
@@ -22,7 +22,7 @@ class Score  extends GameObject{
 
 
     updateHTML(){
-        this.scoreHTML.innerHTML = 1/this.MainScene.getDeltaTime();
+        this.scoreHTML.innerHTML = this.score;
     }
 }
 
