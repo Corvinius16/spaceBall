@@ -11,41 +11,23 @@ class MaterialLoader  extends GameObject{
 
         const loader = new THREE.TextureLoader();
 
-        loader.load("textures/texture_master_mat_BaseColor.png",function(t){
+        loader.load("textures/diffuse.png",function(t){
             thisObj.loadedTexture("base",t);
         });
         loader.load("textures/texture_master_mat_Emissive.png",function(t){
             thisObj.loadedTexture("emmisive",t);
         })
-        loader.load("textures/texture_master_mat_Metallic.png",function(t){
-            thisObj.loadedTexture("met",t);
-        })
-        loader.load("textures/texture_master_mat_Normal.png",function(t){
-            thisObj.loadedTexture("normal",t);
-        })
-        loader.load("textures/texture_master_mat_Roughness.png",function(t){
-            thisObj.loadedTexture("rough",t);
-        })
+
     }
 
     loadedTexture(name,t){
         this.textures.set(name,t);
         this.count++;
-        if(this.count == 5){
+        if(this.count == 2){
          this.initMaterials();
         }
     }
     initMaterials(){
-        let sphereMaterial = new THREE.MeshStandardMaterial({
-            emissiveMap: this.getTexture("emmisive"),
-            emissive: "#ffffff",
-            emissiveIntensity: 2,
-            map: this.getTexture("base"),
-            metalnessMap: this.getTexture("met"),
-            roughnessMap: this.getTexture("rough"),
-            normalMap: this.getTexture("normal")
-        })
-        this.materials.set("base",sphereMaterial);
         let aimMat = new THREE.MeshLambertMaterial({
             color: "#ffff00",
             emissive: "#ffff00",

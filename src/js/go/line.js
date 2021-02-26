@@ -14,8 +14,6 @@ class Line  extends GameObject{
         this.clastersArray =[0,1,2,3];
         this.isAdd = false;
         this.conus = [];
-        this.boxes = [];
-        this.targetBox = undefined;
         this.countLine = countL;
         this.shuffle(this.clastersArray);
         this.createConus(createConusCount)
@@ -83,8 +81,8 @@ class Line  extends GameObject{
 
     createConus(count){
         
-        let obj = window.container.modelContainer.getModel("platform2").geometry.clone();
-       // obj.material = window.container.materialContainer.getMaterial("test").clone();
+        let obj = window.container.modelContainer.getModel("platform2").clone();
+        obj.material = window.container.materialContainer.getMaterial("test").clone();
         
         let fromX = -1.6;
         let clustIndex = 0;
@@ -103,34 +101,18 @@ class Line  extends GameObject{
                 newClast = 0;
             }
             const conus = new Conus(this.MainScene,"conus");
+            conus.getThreeObject().position.set(fromX + this.clastersArray[clustIndex]*0.475*2 + newClast*0.35,0.7,0);
             this.conus.push(conus);
-            let thConus = conus.getThreeObject().geometry.clone();
-            thConus.translate( fromX + this.clastersArray[clustIndex]*0.475*2 + newClast*0.35,0.7,0);
-            geom.push(thConus);
-            let box = thConus.boundingBox;
-            this.boxes.push(box);
-            newClast++;
+            obj.add(conus.getThreeObject());
+             newClast++;
         }
         let tS = new addScoreObject(this.MainScene,"scoreObj");
-        let tSObj = tS.getThreeObject().geometry.clone();
-        tSObj.translate( fromX + this.clastersArray[this.targetClaster]*0.45*2 + 0.25,0.35,0);
-      
-        //geom.push(tSObj);
-        //let box = tS.getThreeObject().geometry.boundingBox;
-        let box = new THREE.Box3();
-        let c = new THREE.Vector3(fromX + this.clastersArray[this.targetClaster]*0.45*2 + 0.25,0.35,0);
-        let s = new THREE.Vector3(0.5,0.7,0.5);
-        box.setFromCenterAndSize(c,s)
-        this.targetBox = box
+        let tSObj = tS.getThreeObject();
+        tSObj.position.set( fromX + this.clastersArray[this.targetClaster]*0.45*2 + 0.25,0.35,0)
+        obj.add(tSObj);
+ 
+        this.setThreeObject(obj);
 
-
-        test = BufferGeometryUtils.mergeBufferGeometries(geom,true);
-        test = BufferGeometryUtils.mergeBufferGeometries([test,tSObj],true);
-         let mesh = new THREE.Mesh(test, [window.container.materialContainer.getMaterial("test").clone(),window.container.materialContainer.getMaterial("aim").clone()])
-        mesh.receiveShadow = true;
-        this.setThreeObject(mesh);
-
-       // this.getThreeObject().add(tSObj);
     }
     SetTimeSync(timeSync){
         this.TimeSync = timeSync;

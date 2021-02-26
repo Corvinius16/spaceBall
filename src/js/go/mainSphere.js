@@ -87,30 +87,32 @@ class MainSphere  extends GameObject{
             if(this.line!=undefined){
                 const box = new THREE.Box3();
                 box.copy( this.getThreeObject().geometry.boundingBox ).applyMatrix4( this.getThreeObject().matrixWorld );
-                this.line.boxes.forEach(el=>{
-                    var collision = box.intersectsBox (el);
+                this.line.getThreeObject().children.forEach(el=>{
+                if(el.name != "Score")
+                {
+                    let box2 = new THREE.Box3();
+                    box2.copy( el.geometry.boundingBox ).applyMatrix4(el.matrixWorld );
+                    var collision = box.intersectsBox (box2);
                     if(collision){
                         coll = true;
                     }
-               
-              
-                   
-                
-                })
-                if(this.line.targetBox != undefined)
-                {
-                    if(!this.line.targetBox.isUsed)
+                }
+                else{
+                    if(!el.isUsed)
                     {
-                        var collision = box.intersectsBox (this.line.targetBox);
+                        let box2 = new THREE.Box3();
+                        box2.copy( el.geometry.newBox ).applyMatrix4(el.matrixWorld );
+                        var collision = box.intersectsBox (box2);
                         if(collision){
-                            this.line.targetBox.isUsed = true;
+                            el.isUsed = true;
                             // let textSc = new TextScore(this.MainScene,"text","5",this.getThreeObject().position);
                             // this.MainScene.addObject(textSc);
                             this.Score.addScore(5);
                         }
+                  
                     }
-              
                 }
+                })
                 
             }
 

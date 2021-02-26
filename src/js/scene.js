@@ -18,50 +18,28 @@ class MainScene {
         this.renderer = new THREE.WebGLRenderer({
             antialias: false,
             powerPreference: "high-performance",
+            alpha:false,
+            stencil: false,
         });
         this.renderer.shadowMap.enabled = true;
         this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         this.setMainCamera(new MainCamera(this,"MainCamera"));
         this.gameObjects = [];
         this.gameObjects.push(this.camera);
-        this.renderer.setPixelRatio( 0.5 );
+        this.renderer.setPixelRatio( 1 );
         this.renderer.setSize( window.innerWidth, window.innerHeight);
         
         document.body.appendChild(this.renderer.domElement);
         var clock = new THREE.Clock();
         this.deltaTime = 0;
-        // this.renderer.info.autoReset = false;
-        // this.composer =new EffectComposer(this.renderer);
-        // this.composer.setPixelRatio( 0.5 );
-        // this.composer.setSize( window.innerWidth, window.innerHeight)
-        // const renderPass = new RenderPass(this.scene, this.getMainCamera().getThreeObject());
-        // this.composer.addPass( renderPass );
-        
-        // const bloom = new BloomPass(0.7, 30, 4,256);
-        // this.composer.addPass( bloom );
-
-
-        // let effectCopy = new ShaderPass( CopyShader );
-        // this.composer.addPass( effectCopy );
-        
-        // effectCopy.renderToScreen = true;
-
-        // this.renderer.autoClear = false;
-        // // thisScene.renderer.debug.checkShaderErrors=false;
 
         function animate() {
             requestAnimationFrame( animate );
-            
-            // thisScene.renderer.info.reset();
             let delta = clock.getDelta();
             thisScene.deltaTime = delta;
             thisScene.gameObjects.forEach(el=>{
                el.update();
             });
-            // thisScene.renderer.render();
-            // thisScene.renderer.clear();
-            // thisScene.composer.render();
-              console.log(thisScene.renderer.info.render.calls);
          thisScene.renderer.render( thisScene.scene, thisScene.getMainCamera().getThreeObject());
          
         }
@@ -108,10 +86,7 @@ class MainScene {
     }
 
     getDeltaTime(){
-        // if(this.deltaTime > 0.0167)
-        // {
-        //     this.deltaTime = 0.0167;
-        // }
+
         return this.deltaTime;
     }
 
