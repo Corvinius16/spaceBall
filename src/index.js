@@ -136,11 +136,12 @@ function InitPositions(){
 }
 
 function clearAll(){
+
     timeSync.Reset();
     timeSync.addObject(lineFabric);
     timeSync.addObject(sphere);
     timeSync.addObject(timeSpeedIncrease);
-
+    soundContainer.getSound("fail").play();
     if(soundContainer.getSound("ambient").isPlaying){
         soundContainer.getSound("ambient").stop();
 
