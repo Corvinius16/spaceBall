@@ -46,7 +46,7 @@ function initEnvironment(){
     staticObject.materialContainer = materialContainer;
     staticObject.modelContainer = modelContainer;
     loader = new LoaderObject(startGame);
-    score = new Score(scene,"score");
+    score = new Score(scene,"score",sphere);
     timeSpeedIncrease = new TimeSpeedIncrease(scene,"timeSpeed",timeSync);
     timeSync.addObject(lineFabric);
     timeSync.addObject(timeSpeedIncrease);
@@ -61,6 +61,7 @@ window.container = staticObject;
 
 function initStartGameObjects(){
     sphere = new MainSphere(scene,"MainSphere",clearAll,score);
+    staticObject.sphere = sphere;
     timeSync.addObject(sphere);
     lineFabric.sphere = sphere;
     loader.addObject(modelContainer);
