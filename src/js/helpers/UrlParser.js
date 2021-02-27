@@ -26,4 +26,4 @@ class UrlParser {
     }
   }
   
-  export default UrlParser
+  export  {UrlParser}

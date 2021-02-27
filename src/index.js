@@ -17,7 +17,7 @@ import {ModelLoader} from "./js/go/modelsContainer";
 import {MaterialLoader} from "./js/go/materialContainer";
 import {SoundLoader} from "./js/go/soundLoader";
 import bridge from '@vkontakte/vk-bridge';
-
+import {UrlParser} from "./js/helpers/UrlParser"
 
 
 bridge.send('VKWebAppInit', {});
@@ -34,6 +34,10 @@ let staticObject;
 let modelContainer;
 let materialContainer;
 let soundContainer;
+let parser = new UrlParser();
+parser.parseUri();
+
+
 function initEnvironment(){
      scene.scene.fog = createFog();
     staticObject = new Container();
@@ -143,6 +147,8 @@ function InitPositions(){
 
 function clearAll(){
 
+    bridge.send("VKWebAppShowNativeAds", {ad_format:"preloader"}).then(data => console.log(data.result))
+    .catch(error => console.log(error));
     timeSync.Reset();
     timeSync.addObject(lineFabric);
     timeSync.addObject(sphere);
