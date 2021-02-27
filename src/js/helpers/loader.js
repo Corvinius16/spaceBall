@@ -21,7 +21,6 @@ class LoaderObject{
             prom.push(pr);
         })
         Promise.all(prom).then(value=>{
-            console.log("asdads");
             thisObj.loadComplete();
         });
     }

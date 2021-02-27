@@ -33,7 +33,6 @@ class ModelLoader  extends GameObject{
         loader2.load("models/Aim.glb",function(obj){
             let object=obj.scene.children[0].children[0];//new THREE.InstancedMesh(obj.children[0].geometry,new THREE.MeshBasicMaterial(),100);
             object.scale.set(1,1,1);
-            object.receiveShadow = true;
             object.geometry.computeBoundingBox();
             object.name="Score";
             let box = new THREE.Box3();

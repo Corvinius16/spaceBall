@@ -15,7 +15,7 @@ import {FontLoader} from "./js/go/fontLoader";
 import {Container} from "./js/go/Container";
 import {ModelLoader} from "./js/go/modelsContainer";
 import {MaterialLoader} from "./js/go/materialContainer";
-import {LineArray} from "./js/go/LineArray";
+import {SoundLoader} from "./js/go/soundLoader";
 let scene = new MainScene();
 let timeSync;
 let lineFabric;
@@ -27,7 +27,7 @@ let timeSpeedIncrease;
 let staticObject;
 let modelContainer;
 let materialContainer;
-
+let soundContainer;
 function initEnvironment(){
      scene.scene.fog = createFog();
     staticObject = new Container();
@@ -36,11 +36,13 @@ function initEnvironment(){
     camera.getThreeObject().position.set(0,2.5,4);
     timeSync = new TimeSync(scene,"timeSync",0.8);
     staticObject.timeSync = timeSync;
-    // fontLoader = new FontLoader(scene,"fontLoader");
-    // staticObject.fontLoader = fontLoader;
     lineFabric = new LineFabric(scene,"lineFabric",timeSync);
+    staticObject.lineFabric = lineFabric;
     modelContainer = new ModelLoader(scene,"modelLoader");
     materialContainer = new MaterialLoader(scene,"materialLoader");
+    soundContainer = new SoundLoader(scene,"soundLoader");
+    camera.getThreeObject().add(soundContainer.listener);
+    staticObject.soundContainer = soundContainer;
     staticObject.materialContainer = materialContainer;
     staticObject.modelContainer = modelContainer;
     loader = new LoaderObject(startGame);
@@ -61,10 +63,9 @@ function initStartGameObjects(){
     sphere = new MainSphere(scene,"MainSphere",clearAll,score);
     timeSync.addObject(sphere);
     lineFabric.sphere = sphere;
-  //  loader.addObject(fontLoader);
-    // loader.addObject(sphere);
     loader.addObject(modelContainer);
     loader.addObject(materialContainer);
+    loader.addObject(soundContainer);
     let light = new AmbientLight(scene,"AmbientLight");
     let dLight = new DirectionalLight(scene,"DirectionalLight");
     dLight.getThreeObject().position.set(0,10,0);
@@ -81,14 +82,31 @@ let menu =  document.querySelector("#mainCl");
 function startGame(){
     menu.addEventListener("click",Start);
     sphere.completeInit();
+    soundContainer.getSound("ambient").onEnded= newAudioSecond;
+    
+    soundContainer.getSound("ambient2").onEnded = newAudioFirst;
 }
-
+function newAudioFirst(){
+  
+    if(soundContainer.getSound("ambient2").isPlaying)
+    {
+    soundContainer.getSound("ambient2").stop();
+    }
+    soundContainer.getSound("ambient").play();
+}
+function newAudioSecond(){
+    if(soundContainer.getSound("ambient").isPlaying){
+        soundContainer.getSound("ambient").stop();
+    }
+    soundContainer.getSound("ambient2").play();
+}
 
 function Start(){
     menu.classList.toggle("hide");
     InitPositions();
     lineFabric.startSync();
     timeSync.StartSync();
+    soundContainer.getSound("ambient").play();
     // sphere.getThreeObject().position.set(0,2,0)
 }
 
@@ -121,7 +139,18 @@ function clearAll(){
     timeSync.addObject(lineFabric);
     timeSync.addObject(sphere);
     timeSync.addObject(timeSpeedIncrease);
+
+    if(soundContainer.getSound("ambient").isPlaying){
+        soundContainer.getSound("ambient").stop();
+
+    }
+    if(soundContainer.getSound("ambient2").isPlaying)
+    {
+    soundContainer.getSound("ambient2").stop();
+    }
+    
     timeSpeedIncrease.Reset();
+    lineFabric.Reset();
     sphere.line = undefined;
     score.Reset();
     var go = [];

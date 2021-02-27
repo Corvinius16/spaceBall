@@ -7,8 +7,8 @@ class LineFabric  extends GameObject{
         super(Scene,Name);
         this.TimeSync =timeSync;
         this.rand = Rand.create();
-        
-    }
+        this.countLine = 5;
+    }   
     
     startSync(){
         let count =this.random(3);
@@ -18,7 +18,7 @@ class LineFabric  extends GameObject{
         line.startMove();
         line.sphere = this.sphere;
         line.SetTimeSync(this.TimeSync);
-    
+        this.currentLine = line;
         this.MainScene.addObject(line);
         this.TimeSync.addObject(line);
     }
@@ -38,15 +38,24 @@ class LineFabric  extends GameObject{
             return 6;
         }
     }
+    Reset(){
+        this.countLine = 5;
+    }
     sync(valueLerp){
         if(valueLerp === 1){
             let count = this.random(3);
             let count2 = this.randomLineByValue(count);
-            let line = new Line(this.MainScene,"line",5,count2);
+            let can = true;
+            if(this.currentLine.moveLeftRight){
+                can =false;
+            }
+            let line = new Line(this.MainScene,"line",5,count2,can);
+            this.countLine++;
             line.sphere = this.sphere;
             line.getThreeObject().position.set(0,-0.3+0.5*5,0-2.5*5);
             line.startMove();
             line.SetTimeSync(this.TimeSync);
+            this.currentLine = line;
             this.MainScene.addObject(line);
             this.TimeSync.addObject(line);
         }
