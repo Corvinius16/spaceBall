@@ -16,6 +16,7 @@ import {Container} from "./js/go/Container";
 import {ModelLoader} from "./js/go/modelsContainer";
 import {MaterialLoader} from "./js/go/materialContainer";
 import {SoundLoader} from "./js/go/soundLoader";
+import bridge from '@vkontakte/vk-bridge';
 let scene = new MainScene();
 let timeSync;
 let lineFabric;
@@ -171,5 +172,6 @@ function clearAll(){
 
 initEnvironment();
 initStartGameObjects();
+bridge.send('VKWebAppInit', {});
 // scene.addThreeObject(createGrid());
 

@@ -17,6 +17,7 @@
     "webpack-cli": "^4.5.0"
   },
   "dependencies": {
+    "@vkontakte/vk-bridge": "^2.4.0",
     "animejs": "^3.2.1",
     "lodash": "^4.17.20",
     "random-seed": "^0.3.0",
