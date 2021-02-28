@@ -17,6 +17,10 @@ class addScoreObject  extends GameObject{
         this.getThreeObject().material.color.set("#ff0000");
         this.getThreeObject().material.emissive.set("#ff0000");
     }
+    ResetColor(){
+        this.getThreeObject().material.color.set("#ffff00");
+        this.getThreeObject().material.emissive.set("#ffff00");
+    }
 }
 
 export {addScoreObject};
