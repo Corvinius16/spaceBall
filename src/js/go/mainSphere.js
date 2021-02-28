@@ -83,15 +83,18 @@ class MainSphere  extends GameObject{
                 this.line.getThreeObject().children.forEach(el=>{
                 if(el.name == "Score")
                 {
+                    if(!el.isUsed)
+                    {
                         let box2 = new THREE.Box3();
                         box2.copy( el.geometry.newBox ).applyMatrix4(el.matrixWorld );
                         var collision = box.intersectsBox (box2);
                         if(collision){
+                            el.isUsed = true;
                             target = true;
                             this.line.scoreTaget.setColor();
                         }
                   
-                    
+                    }
                 }
                 });
             }
