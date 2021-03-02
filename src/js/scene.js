@@ -36,6 +36,9 @@ class MainScene {
         function animate() {
             requestAnimationFrame( animate );
             let delta = clock.getDelta();
+            if(delta>1){
+                delta = 0;
+            }
             thisScene.deltaTime = delta;
             thisScene.gameObjects.forEach(el=>{
                el.update();
