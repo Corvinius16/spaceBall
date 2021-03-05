@@ -176,7 +176,7 @@ function deathAnimation(){
 }
 function clearAll(){
 
-    bridge.send("VKWebAppShowNativeAds", {ad_format:"preloader"}).then(data => console.log(data.result))
+    bridge.send("VKWebAppShowNativeAds", {ad_format:"reward"}).then(data => console.log(data.result))
     .catch(error => console.log(error));
     timeSync.Reset();
     timeSync.addObject(lineFabric);
