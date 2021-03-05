@@ -19,10 +19,10 @@ import {SoundLoader} from "./js/go/soundLoader";
 import bridge from '@vkontakte/vk-bridge';
 import {UrlParser} from "./js/helpers/UrlParser"
 
-
 bridge.send('VKWebAppInit', {});
 
 let scene = new MainScene();
+let deathGif = document.querySelector(".death");
 let timeSync;
 let lineFabric;
 let loader;
@@ -39,7 +39,7 @@ parser.parseUri();
 
 
 function initEnvironment(){
-     scene.scene.fog = createFog();
+    scene.scene.fog = createFog();
     staticObject = new Container();
     let camera = scene.getMainCamera();
     camera.getThreeObject().rotation.set(-0.2,0,0);
@@ -70,7 +70,7 @@ window.container = staticObject;
 
 
 function initStartGameObjects(){
-    sphere = new MainSphere(scene,"MainSphere",clearAll,score);
+    sphere = new MainSphere(scene,"MainSphere",deathAnimation,score);
     staticObject.sphere = sphere;
     timeSync.addObject(sphere);
     lineFabric.sphere = sphere;
@@ -144,15 +144,21 @@ function InitPositions(){
         timeSync.addObject(line);
     }
 }
-
-function clearAll(){
-
-    bridge.send("VKWebAppShowNativeAds", {ad_format:"preloader"}).then(data => console.log(data.result))
-    .catch(error => console.log(error));
+function deathAnimation(){
+    var width = window.innerWidth, height = window.innerHeight;
+    var widthHalf = width / 2, heightHalf = height / 2;
+    var pos = window.container.sphere.getThreeObject().position.clone();
+    pos.project(scene.getMainCamera().getThreeObject());
+    pos.x = ( pos.x * widthHalf ) + widthHalf;
+    pos.y = - ( pos.y * heightHalf ) + heightHalf;
+    let src = deathGif.src;
+    deathGif.src = "";
+    deathGif.src = src;
+    deathGif.classList.toggle("hide");
+    deathGif.style.left= pos.x - 170+"px";
+    deathGif.style.top = pos.y - 170 + "px";
     timeSync.Reset();
-    timeSync.addObject(lineFabric);
-    timeSync.addObject(sphere);
-    timeSync.addObject(timeSpeedIncrease);
+    window.container.sphere.getThreeObject().visible =false;
     soundContainer.getSound("fail").play();
     if(soundContainer.getSound("ambient").isPlaying){
         soundContainer.getSound("ambient").stop();
@@ -162,6 +168,21 @@ function clearAll(){
     {
     soundContainer.getSound("ambient2").stop();
     }
+    setTimeout(function(){
+       deathGif.classList.toggle("hide");
+       window.container.sphere.getThreeObject().visible =true;
+        clearAll()
+    },1000);
+}
+function clearAll(){
+
+    bridge.send("VKWebAppShowNativeAds", {ad_format:"preloader"}).then(data => console.log(data.result))
+    .catch(error => console.log(error));
+    timeSync.Reset();
+    timeSync.addObject(lineFabric);
+    timeSync.addObject(sphere);
+    timeSync.addObject(timeSpeedIncrease);
+  
     
     timeSpeedIncrease.Reset();
     lineFabric.Reset();
