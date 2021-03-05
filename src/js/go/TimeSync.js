@@ -22,6 +22,7 @@ class TimeSync  extends GameObject{
         if(this.start)
         {
             let upd = false;
+            let thisObj = this;
             if(this.timeElapsed<this.time){
                 this.valueLerp = this.lerp(0,1,this.timeElapsed/this.time);
                 this.timeElapsed+=this.MainScene.getDeltaTime();
@@ -32,7 +33,10 @@ class TimeSync  extends GameObject{
                 upd = true;
             }
             this.objects.forEach(el=>{
+                if(thisObj.start)
+                {
                 el.sync(this.valueLerp);
+                }
             })
             if(upd){
                 this.update();
@@ -45,7 +49,8 @@ class TimeSync  extends GameObject{
         this.start = false;
         this.valueLerp = 0;
         this.timeElapsed = 0;
-        this.objects.splice(0,this.objects.length);
+        console.log("reset");
+    //    this.objects.splice(0,this.objects.length);
      
     }
 

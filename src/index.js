@@ -24,7 +24,7 @@ bridge.send('VKWebAppInit', {});
 let scene = new MainScene();
 let deathGif = document.querySelector(".death");
 let timeSync;
-let lineFabric;
+//let lineFabric;
 let loader;
 let sphere;
 let score;
@@ -46,8 +46,8 @@ function initEnvironment(){
     camera.getThreeObject().position.set(0,2.5,4);
     timeSync = new TimeSync(scene,"timeSync",0.8);
     staticObject.timeSync = timeSync;
-    lineFabric = new LineFabric(scene,"lineFabric",timeSync);
-    staticObject.lineFabric = lineFabric;
+   // lineFabric = new LineFabric(scene,"lineFabric",timeSync);
+  //  staticObject.lineFabric = lineFabric;
     modelContainer = new ModelLoader(scene,"modelLoader");
     materialContainer = new MaterialLoader(scene,"materialLoader");
     soundContainer = new SoundLoader(scene,"soundLoader");
@@ -58,11 +58,11 @@ function initEnvironment(){
     loader = new LoaderObject(startGame);
     score = new Score(scene,"score",sphere);
     timeSpeedIncrease = new TimeSpeedIncrease(scene,"timeSpeed",timeSync);
-    timeSync.addObject(lineFabric);
+  //  timeSync.addObject(lineFabric);
     timeSync.addObject(timeSpeedIncrease);
     scene.addObject(score);
     scene.addObject(timeSync);
-    scene.addObject(lineFabric);
+   // scene.addObject(lineFabric);
     
 window.container = staticObject;
 
@@ -73,7 +73,7 @@ function initStartGameObjects(){
     sphere = new MainSphere(scene,"MainSphere",deathAnimation,score);
     staticObject.sphere = sphere;
     timeSync.addObject(sphere);
-    lineFabric.sphere = sphere;
+  //  lineFabric.sphere = sphere;
     loader.addObject(modelContainer);
     loader.addObject(materialContainer);
     loader.addObject(soundContainer);
@@ -94,7 +94,7 @@ function startGame(){
     menu.addEventListener("click",Start);
     sphere.completeInit();
     soundContainer.getSound("ambient").onEnded= newAudioSecond;
-    
+    InitPositions();
     soundContainer.getSound("ambient2").onEnded = newAudioFirst;
 }
 function newAudioFirst(){
@@ -114,23 +114,25 @@ function newAudioSecond(){
 
 function Start(){
     menu.classList.toggle("hide");
-    InitPositions();
-    lineFabric.startSync();
+   // InitPositions();
+ //   lineFabric.startSync();
     timeSync.StartSync();
     soundContainer.getSound("ambient").play();
     // sphere.getThreeObject().position.set(0,2,0)
 }
 
+
+
 function InitPositions(){
     sphere.getThreeObject().position.set(0,0,0);
-    let line = new Line(scene,"line",1);
+    let line = new Line(scene,"line",0);
     line.sphere = sphere;
     line.SetTimeSync(timeSync);
     line.getThreeObject().position.set(0,-0.3,0);
     line.startMove();
     scene.addObject(line);
     timeSync.addObject(line);
-    for (var i = 1; i<5; i++) {
+    for (var i = 1; i<6; i++) {
         let countC = 0;
         if(i>2){
            countC = 2;
@@ -178,25 +180,22 @@ function clearAll(){
 
     bridge.send("VKWebAppShowNativeAds", {ad_format:"preloader"}).then(data => console.log(data.result))
     .catch(error => console.log(error));
-    timeSync.Reset();
-    timeSync.addObject(lineFabric);
-    timeSync.addObject(sphere);
-    timeSync.addObject(timeSpeedIncrease);
+    //timeSync.Reset();
+    //timeSync.addObject(lineFabric);
+    //timeSync.addObject(sphere);
+    //timeSync.addObject(timeSpeedIncrease);
   
     
     timeSpeedIncrease.Reset();
-    lineFabric.Reset();
+   // lineFabric.Reset();
     sphere.line = undefined;
     score.Reset();
-    var go = [];
     scene.gameObjects.forEach(el=>{
-        go.push(el);
-    })
-    go.forEach(el=>{
         if(el.Name ==="line"){
-            el.Destroy();
+            el.Reset();
         }
     })
+   
    menu.classList.toggle("hide");
 }
 
