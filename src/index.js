@@ -36,7 +36,7 @@ let materialContainer;
 let soundContainer;
 let parser = new UrlParser();
 parser.parseUri();
-
+THREE.Cache.enabled = true;
 
 function initEnvironment(){
     scene.scene.fog = createFog();
