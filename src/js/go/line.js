@@ -14,40 +14,33 @@ class Line  extends GameObject{
         this.isAdd = false;
         this.conus = [];
         this.countLine = countL;
-        this.startedLine = countL;
-        this.MaxLine = 5;
         this.shuffle(this.clastersArray);
         this.createConus(createConusCount);
         this.moveLeftRight = false;
         this.moveR = true;
         if(canMove)
         {
-            // if(window.container.lineFabric.countLine>15){
-            //     if(this.rand(100)<10){
-            //         let fromX = -1.6;
-            //         let x = fromX + this.clastersArray[0]*0.45*2 + 0.25;
-            //         this.LeftX = x - this.clastersArray[0]*0.45*2 -0.25;
-            //         this.rightX = x+ (3-this.clastersArray[0])*0.45*2 ;
-            //         this.delta =  this.getThreeObject().position.x - x;
-            //         this.moveLeftRight = true;
-            //         let dir = this.rand(1);
-            //         if(dir){
-            //             this.moveR = true;
-            //         }
-            //         else{
-            //             this.moveR = false;
-            //         }
+            if(window.container.lineFabric.countLine>15){
+                if(this.rand(100)<10){
+                    let fromX = -1.6;
+                    let x = fromX + this.clastersArray[0]*0.45*2 + 0.25;
+                    this.LeftX = x - this.clastersArray[0]*0.45*2 -0.25;
+                    this.rightX = x+ (3-this.clastersArray[0])*0.45*2 ;
+                    this.delta =  this.getThreeObject().position.x - x;
+                    this.moveLeftRight = true;
+                    let dir = this.rand(1);
+                    if(dir){
+                        this.moveR = true;
+                    }
+                    else{
+                        this.moveR = false;
+                    }
                     
-            //     }
-            // }
+                }
+            }
         }
     }
-    Reset(){
-        this.countLine = this.startedLine;
-        this.isAdd = false;
-        this.getThreeObject().position.set(0,-0.3+0.5*(this.countLine),0-2.5*(this.countLine));
-        this.startMove();
-    }
+
     startMove(){
         this.target = {
             y: this.getThreeObject().position.y-0.5,
@@ -58,6 +51,9 @@ class Line  extends GameObject{
         // console.log(this.pos);
     }
     update(){
+       if(this.getThreeObject().position.z>2.5){
+           this.Destroy();
+       }
        this.conus.forEach(el=>{
         el.update();
     })
@@ -65,12 +61,6 @@ class Line  extends GameObject{
 
     sync(valueLerp){
         if(valueLerp === 1){
-            console.log(this.countLine);
-            if(this.countLine === -1){
-                this.getThreeObject().position.set(0,-0.3+0.5*this.MaxLine,0-2.5*this.MaxLine);
-                this.countLine = this.MaxLine;
-              
-            }
             this.target = {
                 y: this.getThreeObject().position.y-0.5,
                 z: this.getThreeObject().position.z+2.5
@@ -80,7 +70,6 @@ class Line  extends GameObject{
             this.pos.copy(this.getThreeObject().position);
             valueLerp=0;
             this.isAdd = false;
-           
         }
         if(valueLerp>0.3){
             if(!this.isAdd)
@@ -88,10 +77,9 @@ class Line  extends GameObject{
                 this.countLine --;
                 this.isAdd = true;
                 if(this.countLine === 0){
-                    console.log("asd");
                     this.sphere.setLine(this);
+                    
                 }
-                
              }
         }
         if(this.moveLeftRight){
@@ -191,12 +179,12 @@ class Line  extends GameObject{
         this.TimeSync = timeSync;
     }
     Destroy(){
-        // this.getThreeObject().children.forEach(el=>{
-        //    el.geometry.dispose();
-        //    el.material.dispose();
-        // });
-        // this.TimeSync.DestroyObj(this);
-        // super.Destroy();
+        this.getThreeObject().children.forEach(el=>{
+           el.geometry.dispose();
+           el.material.dispose();
+        });
+        this.TimeSync.DestroyObj(this);
+        super.Destroy();
     }
     
 

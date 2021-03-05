@@ -135,7 +135,6 @@ class MainSphere  extends GameObject{
                 
             }
             if(valueLerp>0.8){
-                if(this.line !=undefined){
                 const box = new THREE.Box3();
                 box.copy( this.getThreeObject().geometry.boundingBox ).applyMatrix4( this.getThreeObject().matrixWorld );
                 let box2 = new THREE.Box3();
@@ -150,7 +149,6 @@ class MainSphere  extends GameObject{
                 if(collision2){
                     coll = true;
                 }
-            }
 
             }
             if(coll){
