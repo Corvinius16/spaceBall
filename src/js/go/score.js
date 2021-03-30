@@ -3,7 +3,7 @@ import {ScoreHtml} from "./scoreHtml";
 class Score  extends GameObject{
     constructor(Scene,Name){
         super(Scene,Name);
-        this.scoreHTML = document.querySelector(".score");
+     //   this.scoreHTML = document.querySelector(".score");
         this.score = 0;
     }
     update(){
@@ -37,7 +37,7 @@ class Score  extends GameObject{
 
 
     updateHTML(){
-        this.scoreHTML.innerHTML = this.score;
+//this.scoreHTML.innerHTML = this.score;
     }
 }
 

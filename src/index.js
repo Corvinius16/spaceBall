@@ -88,10 +88,11 @@ function initStartGameObjects(){
 
 
 let menu =  document.querySelector("#mainCl");
+let startButtonGame= document.querySelector("#startGameButton");
 
 
 function startGame(){
-    menu.addEventListener("click",Start);
+    startButtonGame.addEventListener("click",Start);
     sphere.completeInit();
     soundContainer.getSound("ambient").onEnded= newAudioSecond;
     
@@ -117,6 +118,7 @@ function Start(){
     InitPositions();
     lineFabric.startSync();
     timeSync.StartSync();
+    window.container.sphere.getThreeObject().visible =true
     soundContainer.getSound("ambient").play();
     // sphere.getThreeObject().position.set(0,2,0)
 }
@@ -170,7 +172,7 @@ function deathAnimation(){
     }
     setTimeout(function(){
        deathGif.classList.toggle("hide");
-       window.container.sphere.getThreeObject().visible =true;
+   //    window.container.sphere.getThreeObject().visible =true;
         clearAll()
     },1000);
 }
