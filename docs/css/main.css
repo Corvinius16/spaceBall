@@ -55,14 +55,22 @@ body {
     margin-right: auto;
     z-index: 1;
 }
-.menuButtonContainer h1{
+.menuButtonContainerName{
+    margin-bottom: 180px;
+    width: max-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+.menuButtonContainerName h1{
     font-size: 150px;
     letter-spacing: 26px;
+    width: max-content;
     color: white;
-    margin-right: -28px;
     font-family: "Furore";
     text-align: center;
-    margin-bottom: 200px;
+    margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
     font-weight: 400;
     margin-top: 0;
     text-shadow: 0 0 0px #fff, 0 0 #fff, 0 0 0px #06c1d1, 0 0 0px #06c1d1, 0 0 0px #06c1d1, 0 0 40px #06c1d1, 0 0 11px #07c2f1;
@@ -82,7 +90,7 @@ body {
    
 }
 
-.menuButton a{
+.but{
     display: flex;
     margin-bottom: 115px;
     height: 200px;
