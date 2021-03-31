@@ -190,15 +190,21 @@ function deathAnimation(){
 }
 function clearAll(){
 
-    bridge.send("VKWebAppShowNativeAds", {ad_format:"preloader"}).then(data => console.log(data.result))
-    .catch(error => console.log(error));
+    recordController.setNewRecord(score.score);
+    recordHtml.innerHTML = recordController.recordValue;
+
+    if(recordController.showAds){
+        recordController.showAds = false;
+        bridge.send("VKWebAppShowNativeAds", {ad_format:"preloader"}).then(data => console.log(data.result))
+        .catch(error => console.log(error));
+    }
+  
     timeSync.Reset();
     timeSync.addObject(lineFabric);
     timeSync.addObject(sphere);
     timeSync.addObject(timeSpeedIncrease);
   
-    recordController.setNewRecord(score.score);
-    recordHtml.innerHTML = recordController.recordValue;
+  
 
     timeSpeedIncrease.Reset();
     lineFabric.Reset();

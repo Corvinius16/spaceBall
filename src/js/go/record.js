@@ -3,6 +3,8 @@ class Record  extends GameObject{
     constructor(Scene,Name){
         super(Scene,Name);
         this.recordValue = 0;
+        this.adsScore = 0;
+        this.showAds = false;
         this.getRecordFromVK();
     }
 
@@ -22,6 +24,11 @@ class Record  extends GameObject{
     }
 
     setNewRecord(score){
+        this.adsScore += score;
+        if(this.adsScore>200){
+            this.adsScore =0;
+            this.showAds = true;
+        }
         if(score>this.recordValue){
             this.recordValue = score;
             window.container.vkBridge.send("VKWebAppStorageSet",{"key":"record","value":String(score)});
