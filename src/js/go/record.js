@@ -10,8 +10,10 @@ class Record  extends GameObject{
         let thisObj = this;
         // console.log(window.container.vkBridge);
         window.container.vkBridge.send("VKWebAppStorageGet",{"keys":["record"]}).then(data=>{
-            console.log(data);
             thisObj.recordValue = data.keys[0].value;
+            if(thisObj.recordValue==""){
+                thisObj.recordValue = 0;
+            }
             thisObj.loadComplete();
         }).catch(error=>{
             console.log(error);
@@ -22,9 +24,7 @@ class Record  extends GameObject{
     setNewRecord(score){
         if(score>this.recordValue){
             this.recordValue = score;
-            window.container.vkBridge.send("VKWebAppStorageSet",{"key":"record","value":score}).then(data=>{
-             
-            });
+            window.container.vkBridge.send("VKWebAppStorageSet",{"key":"record","value":score});
         }
     }
 
