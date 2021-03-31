@@ -18,8 +18,10 @@ import {MaterialLoader} from "./js/go/materialContainer";
 import {SoundLoader} from "./js/go/soundLoader";
 import bridge from '@vkontakte/vk-bridge';
 import {UrlParser} from "./js/helpers/UrlParser"
-
+import {Record} from "./js/go/record";
 bridge.send('VKWebAppInit', {});
+
+
 
 let scene = new MainScene();
 let deathGif = document.querySelector(".death");
@@ -34,6 +36,7 @@ let staticObject;
 let modelContainer;
 let materialContainer;
 let soundContainer;
+let recordController;
 let parser = new UrlParser();
 parser.parseUri();
 THREE.Cache.enabled = true;
@@ -51,10 +54,13 @@ function initEnvironment(){
     modelContainer = new ModelLoader(scene,"modelLoader");
     materialContainer = new MaterialLoader(scene,"materialLoader");
     soundContainer = new SoundLoader(scene,"soundLoader");
+   
     camera.getThreeObject().add(soundContainer.listener);
     staticObject.soundContainer = soundContainer;
     staticObject.materialContainer = materialContainer;
     staticObject.modelContainer = modelContainer;
+    staticObject.vkBridge = bridge;
+   
     loader = new LoaderObject(startGame);
     score = new Score(scene,"score",sphere);
     timeSpeedIncrease = new TimeSpeedIncrease(scene,"timeSpeed",timeSync);
@@ -64,7 +70,8 @@ function initEnvironment(){
     scene.addObject(timeSync);
     scene.addObject(lineFabric);
     
-window.container = staticObject;
+    window.container = staticObject;
+    recordController = new Record(scene, "recordController");
 
 }
 
@@ -77,6 +84,7 @@ function initStartGameObjects(){
     loader.addObject(modelContainer);
     loader.addObject(materialContainer);
     loader.addObject(soundContainer);
+    // loader.addObject(recordController);
     let light = new AmbientLight(scene,"AmbientLight");
     let dLight = new DirectionalLight(scene,"DirectionalLight");
     dLight.getThreeObject().position.set(0,10,0);
@@ -88,10 +96,14 @@ function initStartGameObjects(){
 
 
 let menu =  document.querySelector("#mainCl");
+let bCon = document.querySelector(".menuButtonContainer");
 let startButtonGame= document.querySelector("#startGameButton");
-
-
+let loaderGif = document.querySelector(".loader");
+let recordHtml = document.querySelector("#record");
 function startGame(){
+   loaderGif.classList.add("hide");
+   bCon.classList.remove("hide");
+    recordHtml.innerHTML = recordController.recordValue;
     startButtonGame.addEventListener("click",Start);
     sphere.completeInit();
     soundContainer.getSound("ambient").onEnded= newAudioSecond;
@@ -185,7 +197,9 @@ function clearAll(){
     timeSync.addObject(sphere);
     timeSync.addObject(timeSpeedIncrease);
   
-    
+    recordController.setNewRecord(score.score);
+
+
     timeSpeedIncrease.Reset();
     lineFabric.Reset();
     sphere.line = undefined;
