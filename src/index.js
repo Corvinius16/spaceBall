@@ -198,7 +198,7 @@ function clearAll(){
     timeSync.addObject(timeSpeedIncrease);
   
     recordController.setNewRecord(score.score);
-
+    recordHtml.innerHTML = recordController.recordValue;
 
     timeSpeedIncrease.Reset();
     lineFabric.Reset();
