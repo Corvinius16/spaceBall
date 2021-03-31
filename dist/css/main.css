@@ -98,7 +98,7 @@ body {
 
 .scoreContainer{
     position: absolute;
-    top: 150px;
+    top: 15%;
     width: 40%;
     left: 50%;
     transform: translateX(-50%);
