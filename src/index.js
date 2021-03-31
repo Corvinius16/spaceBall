@@ -41,6 +41,9 @@ let parser = new UrlParser();
 parser.parseUri();
 THREE.Cache.enabled = true;
 
+
+let firstRun = true;
+
 function initEnvironment(){
     scene.scene.fog = createFog();
     staticObject = new Container();
@@ -100,9 +103,11 @@ let bCon = document.querySelector(".menuButtonContainer");
 let startButtonGame= document.querySelector("#startGameButton");
 let loaderGif = document.querySelector(".loader");
 let recordHtml = document.querySelector("#record");
+let scoreHtml = document.querySelector(".scoreContainer");
+let tutorHtml = document.querySelector(".tutorGif");
 function startGame(){
-   loaderGif.classList.add("hide");
-   bCon.classList.remove("hide");
+    loaderGif.classList.add("hide");
+    bCon.classList.remove("hide");
     recordHtml.innerHTML = recordController.recordValue;
     startButtonGame.addEventListener("click",Start);
     sphere.completeInit();
@@ -127,16 +132,27 @@ function newAudioSecond(){
 
 function Start(){
     menu.classList.toggle("hide");
+    scoreHtml.classList.toggle("hide");
+    sphere.play = true;
     InitPositions();
+    if(firstRun){
+        window.startPlay = play;
+        firstRun = false;
+        tutorHtml.classList.remove("hide");
+    }
+    else{
+        play();
+    }
+}
+
+function play(){
     lineFabric.startSync();
-    timeSync.StartSync();
-    window.container.sphere.getThreeObject().visible =true
+    timeSync.StartSync(); window.container.sphere.getThreeObject().visible =true
     soundContainer.getSound("ambient").play();
-    // sphere.getThreeObject().position.set(0,2,0)
 }
 
 function InitPositions(){
-    sphere.getThreeObject().position.set(0,0,0);
+    sphere.getThreeObject().position.set(0,0.5,0);
     let line = new Line(scene,"line",1);
     line.sphere = sphere;
     line.SetTimeSync(timeSync);
@@ -192,7 +208,7 @@ function clearAll(){
 
     recordController.setNewRecord(score.score);
     recordHtml.innerHTML = recordController.recordValue;
-
+    scoreHtml.classList.toggle("hide");
     if(recordController.showAds){
         recordController.showAds = false;
         bridge.send("VKWebAppShowNativeAds", {ad_format:"preloader"}).then(data => console.log(data.result))

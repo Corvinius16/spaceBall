@@ -10,7 +10,7 @@ class MainSphere  extends GameObject{
       
 
         this.vec=new THREE.Vector3(0,0,0);
-        this.pos = new THREE.Vector3(0,0,0);
+        this.pos = new THREE.Vector3(0,0.5,0);
         this.delta = new THREE.Vector3(0,0,0);
         this.newPos = new THREE.Vector3(0,0,0);
         this.Score = score;
@@ -19,6 +19,9 @@ class MainSphere  extends GameObject{
         this.toY = 2;
         this.gameOver = gameOver;
         this.countRotation = 2;
+        this.tutorHtml = document.querySelector(".tutorGif");
+        this.tutor = true;
+        this.play = false;
         document.addEventListener("touchstart",this.handleStart.bind(this),false);
         document.addEventListener("touchmove", this.handleMove.bind(this), false);
         document.addEventListener("touchend",this.handleEnd.bind(this),false);
@@ -27,6 +30,7 @@ class MainSphere  extends GameObject{
 
     completeInit(){
         let obj = window.container.modelContainer.getModel("ball").clone();
+        obj.position.set(0,0.5,0);
         obj.material = window.container.materialContainer.getMaterial("test").clone();
         this.setThreeObject(obj);
         this.MainScene.addObject(this);
@@ -166,6 +170,14 @@ class MainSphere  extends GameObject{
         this.delta= 0;
     }
     handleStart(event){
+        if(this.play)
+        {
+            if(this.tutor === true){
+                this.tutor = false;
+                window.startPlay();
+                this.tutorHtml.classList.add("hide");
+            }
+        }
         this.move = true;
         this.delta = 0;
         this.pos.set(0,0,0);

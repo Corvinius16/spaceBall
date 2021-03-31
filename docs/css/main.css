@@ -87,14 +87,22 @@ body {
    
 }
 
-.menuButton a{
+.menuButtonA{
     display: flex;
     margin-bottom: 115px;
     height: 200px;
     justify-content: center;
     position: relative;
+
 }
 
+.scoreContainer{
+    position: absolute;
+    top: 50px;
+    width: 40%;
+    left: 50%;
+    transform: translateX(-50%);
+}
 .menuButtonText{
     position: absolute;
     display: flex;
@@ -119,6 +127,12 @@ body {
     margin-top: auto;
     margin-bottom: auto;
 }
+#startGameButton{
+    -moz-user-select: auto; 
+    -webkit-user-select: auto; 
+    -ms-user-select: auto; 
+    user-select: auto;
+}
 #startGameButton:active{
     text-shadow: 0 0 0px #fff, 0 0 #fff, 0 0 0px #06c1d1, 0 0 0px #06c1d1, 0 0 38px #06c1d1, 0 0 110px #06c1d1, 0 0 43px #07c2f1;
 }
@@ -137,6 +151,22 @@ body {
 
 .loader img{
     width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+.tutorGif{
+    width: 100%;
+    z-index: 1;
+    position: absolute;
+    bottom: 13%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.tutorGif img{
+    width: 100%;
+    
+    filter:drop-shadow(0px 0px 19px #06c1d1);
     height: auto;
     object-fit: contain;
 }
