@@ -24,7 +24,7 @@ class Record  extends GameObject{
     setNewRecord(score){
         if(score>this.recordValue){
             this.recordValue = score;
-            window.container.vkBridge.send("VKWebAppStorageSet",{"key":"record","value":score});
+            window.container.vkBridge.send("VKWebAppStorageSet",{"key":"record","value":String(score)});
         }
     }
 
