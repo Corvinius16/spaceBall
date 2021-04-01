@@ -111,10 +111,14 @@ let tutorHtml = document.querySelector(".tutorGif");
 
 
 let addtoFav = document.querySelector("#addToFavorites");
-alert(JSON.stringify(parser.paramsAsObject));
+let invFr = document.querySelector("#inviteFriends");
 if(parser.getParam("vk_is_favorite") == "1"){
     addtoFav.classList.add("hide");
 }
+
+invFr.addEventListener("click",function(){
+    vkApi.inviteFriends();
+})
 addtoFav.addEventListener("click",function(){
     vkApi.addToFavorite();
 })

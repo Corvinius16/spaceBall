@@ -8,5 +8,8 @@ class VKApi{
     addToFavorite(){
         this.vkbridge.send("VKWebAppAddToFavorites");
     }
+    inviteFriends(){
+        this.vkbridge.send("VKWebAppShowInviteBox");
+    }
 }
 export {VKApi};
