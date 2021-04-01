@@ -170,3 +170,31 @@ body {
     height: auto;
     object-fit: contain;
 }
+
+.socialButtons{
+    display: flex;
+    margin-top: 200px;
+    justify-content: space-around;
+}
+
+.socialButtons a{
+    display: flex;
+    flex-direction: column;
+    height: 239px;
+}
+.socialButtons a img{
+    width: auto;
+    height: 115px;
+    object-fit: contain;
+    margin-left: auto;
+    margin-right: auto;
+}
+.socialButtons a p{
+    font-size: 27px;
+    color: #00f6ff;
+    font-family: "Furore";
+    font-weight: 400;
+    letter-spacing: 6px;
+    text-align: center;
+    margin-top: auto;
+}

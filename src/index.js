@@ -19,11 +19,14 @@ import {SoundLoader} from "./js/go/soundLoader";
 import bridge from '@vkontakte/vk-bridge';
 import {UrlParser} from "./js/helpers/UrlParser"
 import {Record} from "./js/go/record";
+import {VKApi} from "./js/helpers/vkApi";
 bridge.send('VKWebAppInit', {});
 
 
 
+
 let scene = new MainScene();
+let vkApi = new VKApi(bridge);
 let deathGif = document.querySelector(".death");
 let timeSync;
 let lineFabric;
@@ -105,6 +108,12 @@ let loaderGif = document.querySelector(".loader");
 let recordHtml = document.querySelector("#record");
 let scoreHtml = document.querySelector(".scoreContainer");
 let tutorHtml = document.querySelector(".tutorGif");
+
+
+let addtoFav = document.querySelector("#addToFavorites");
+addtoFav.addEventListener("click",function(){
+    vkApi.addToFavorite();
+})
 function startGame(){
     loaderGif.classList.add("hide");
     bCon.classList.remove("hide");
