@@ -15,7 +15,7 @@ class VKApi{
     addToWall(rec){
         this.vkbridge.send("VKWebAppShowWallPostBox",{
             "message":`Мой рекорд ${rec}, сможешь ли ты его побить? `,
-            "attachments":"https://vk.com/app7774807"
+            "attachments":"photo226946259_457240119, https://vk.com/app7774807"
         })
     }
 }
