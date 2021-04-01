@@ -112,10 +112,13 @@ let tutorHtml = document.querySelector(".tutorGif");
 
 let addtoFav = document.querySelector("#addToFavorites");
 let invFr = document.querySelector("#inviteFriends");
+let addtoWall = document.querySelector("#addToWall");
 if(parser.getParam("vk_is_favorite") == "1"){
     addtoFav.classList.add("hide");
 }
-
+addtoWall.addEventListener("click",function(){
+    vkApi.addToWall(recordController.recordValue)
+})
 invFr.addEventListener("click",function(){
     vkApi.inviteFriends();
 })
