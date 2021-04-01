@@ -1,25 +1,18 @@
+
+import qs from 'querystring';
 class UrlParser {
     constructor() {
       this.params = {};
     }
   
     parseUri() {
-      const uri = window.location.search.substr(1);
-      const partParams = uri.split('&');
-  
-      if (!partParams.length) {
-        return;
-      }
-  
-      partParams.forEach((item) => {
-        const [key, value] = item.split('=');
-        this.params[key] = value;
-      });
+      const params = window.location.search.slice(1);
+      this.paramsAsObject = qs.parse(params);
     }
   
     getParam(name) {
-      if (typeof(this.params[name]) !== 'undefined') {
-        return this.params[name];
+      if (typeof(this.paramsAsObject[name]) !== 'undefined') {
+        return this.paramsAsObject[name];
       }
   
       return null;
