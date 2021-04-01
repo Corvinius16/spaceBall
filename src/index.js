@@ -111,6 +111,9 @@ let tutorHtml = document.querySelector(".tutorGif");
 
 
 let addtoFav = document.querySelector("#addToFavorites");
+if(parser.getParam("is_favorite") == 1){
+    addtoFav.classList.add("hide");
+}
 addtoFav.addEventListener("click",function(){
     vkApi.addToFavorite();
 })
