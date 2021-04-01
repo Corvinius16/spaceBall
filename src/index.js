@@ -111,7 +111,7 @@ let tutorHtml = document.querySelector(".tutorGif");
 
 
 let addtoFav = document.querySelector("#addToFavorites");
-alert(parser.paramsAsObject);
+alert(JSON.stringify(parser.paramsAsObject));
 if(parser.getParam("vk_is_favorite") == "1"){
     addtoFav.classList.add("hide");
 }
