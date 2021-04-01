@@ -111,7 +111,7 @@ let tutorHtml = document.querySelector(".tutorGif");
 
 
 let addtoFav = document.querySelector("#addToFavorites");
-document.querySelector(".menuButtonContainer h1").innerHTML = JSON.stringify(parser.paramsAsObject);
+alert(JSON.stringify(parser.paramsAsObject));
 if(parser.getParam("vk_is_favorite") == "1"){
     addtoFav.classList.add("hide");
 }
