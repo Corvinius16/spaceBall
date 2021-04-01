@@ -2,7 +2,7 @@
 import qs from 'querystring';
 class UrlParser {
     constructor() {
-      this.params = {};
+
     }
   
     parseUri() {
@@ -11,11 +11,8 @@ class UrlParser {
     }
   
     getParam(name) {
-      if (typeof(this.paramsAsObject[name]) !== 'undefined') {
-        return this.paramsAsObject[name];
-      }
-  
-      return null;
+      console.log(this.paramsAsObject);
+      return this.paramsAsObject[name];
     }
   }
   
