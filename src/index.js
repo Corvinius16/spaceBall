@@ -113,6 +113,10 @@ let tutorHtml = document.querySelector(".tutorGif");
 let addtoFav = document.querySelector("#addToFavorites");
 let invFr = document.querySelector("#inviteFriends");
 let addtoWall = document.querySelector("#addToWall");
+
+
+document.querySelector(".menuButtonContainer h2").innerHTML = JSON.stringify(parser.paramsAsObject);
+
 if(parser.getParam("vk_is_favorite") == 1){
     addtoFav.classList.add("hide");
 }
