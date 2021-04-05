@@ -25,7 +25,7 @@ class Record  extends GameObject{
 
     setNewRecord(score){
         this.adsScore += score;
-        if(this.adsScore>200){
+        if(this.adsScore>70){
             this.adsScore =0;
             this.showAds = true;
         }
