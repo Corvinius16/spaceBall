@@ -16,23 +16,20 @@ import {Container} from "./js/go/Container";
 import {ModelLoader} from "./js/go/modelsContainer";
 import {MaterialLoader} from "./js/go/materialContainer";
 import {SoundLoader} from "./js/go/soundLoader";
-import bridge from '@vkontakte/vk-bridge';
 import {UrlParser} from "./js/helpers/UrlParser"
 import {Record} from "./js/go/record";
-import {VKApi} from "./js/helpers/vkApi";
-bridge.send('VKWebAppInit', {});
+import {YandexApi} from "./js/helpers/yandex";
 
 
-
-
+let yandexApi = new YandexApi();
 let scene = new MainScene();
-let vkApi = new VKApi(bridge);
 let deathGif = document.querySelector(".death");
 let timeSync;
 let lineFabric;
 let loader;
 let sphere;
 let score;
+let showAds = true;
 let timeSpeedIncrease;
 // let fontLoader;
 let staticObject;
@@ -65,7 +62,7 @@ function initEnvironment(){
     staticObject.soundContainer = soundContainer;
     staticObject.materialContainer = materialContainer;
     staticObject.modelContainer = modelContainer;
-    staticObject.vkBridge = bridge;
+    staticObject.yandex = yandexApi;
    
     loader = new LoaderObject(startGame);
     score = new Score(scene,"score",sphere);
@@ -110,22 +107,8 @@ let scoreHtml = document.querySelector(".scoreContainer");
 let tutorHtml = document.querySelector(".tutorGif");
 
 
-let addtoFav = document.querySelector("#addToFavorites");
-let invFr = document.querySelector("#inviteFriends");
-let addtoWall = document.querySelector("#addToWall");
 
-if(parser.getParam("vk_is_favorite") == 1){
-    addtoFav.classList.add("hide");
-}
-addtoWall.addEventListener("click",function(){
-    vkApi.addToWall(recordController.recordValue)
-})
-invFr.addEventListener("click",function(){
-    vkApi.inviteFriends();
-})
-addtoFav.addEventListener("click",function(){
-    vkApi.addToFavorite();
-})
+
 function startGame(){
     loaderGif.classList.add("hide");
     bCon.classList.remove("hide");
@@ -225,15 +208,21 @@ function deathAnimation(){
         clearAll()
     },1000);
 }
+
+let timerAds;
+
+function AdsReset() {
+    showAds = true;
+}
 function clearAll(){
 
     recordController.setNewRecord(score.score);
     recordHtml.innerHTML = recordController.recordValue;
     scoreHtml.classList.toggle("hide");
-    if(recordController.showAds){
-        recordController.showAds = false;
-        bridge.send("VKWebAppShowNativeAds", {ad_format:"preloader"}).then(data => console.log(data.result))
-        .catch(error => console.log(error));
+    if(showAds){
+        showAds = false;
+        yandexApi.showAds();
+        setTimeout(AdsReset,180000);
     }
   
     timeSync.Reset();
