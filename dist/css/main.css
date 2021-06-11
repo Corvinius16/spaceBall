@@ -52,24 +52,21 @@ body {
     height: 100%;
 }
 .menuButtonContainer{
-    margin-top: auto;
-    margin-bottom: auto;
-    margin-top: auto;
-    margin-bottom: auto;
+    display: flex;
     margin-left: auto;
     margin-right: auto;
+    flex-direction: column;
     z-index: 1;
 }
 .menuButtonContainer h1{
-    font-size: 150px;
-    letter-spacing: 26px;
+    font-size: 32px;
+    letter-spacing: 17px;
     color: white;
     margin-right: -28px;
+    margin-top: 35px;
     font-family: "Furore";
     text-align: center;
-    margin-bottom: 200px;
     font-weight: 400;
-    margin-top: 0;
     text-shadow: 0 0 0px #fff, 0 0 #fff, 0 0 0px #06c1d1, 0 0 0px #06c1d1, 0 0 0px #06c1d1, 0 0 40px #06c1d1, 0 0 11px #07c2f1;
 }
 .menuImages{
@@ -79,8 +76,10 @@ body {
     object-fit: contain;
 }
 .menuButton{
+    margin-top: auto;
+    margin-bottom: auto;
     display: flex;
-    width: 73%;
+    width: 300px;
     flex-direction: column;
     margin-left: auto;
     margin-right: auto;
@@ -89,17 +88,19 @@ body {
 
 .menuButtonA{
     display: flex;
-    margin-bottom: 115px;
-    height: 200px;
+    height: 50px;
     justify-content: center;
     position: relative;
 
+}
+.menuButtonA img{
+    object-fit: contain;
 }
 
 .scoreContainer{
     position: absolute;
     top: 15%;
-    width: 40%;
+    width: 300px;
     left: 50%;
     transform: translateX(-50%);
 }
@@ -111,7 +112,7 @@ body {
 }
 
 .menuButtonText p{
-    font-size: 59px;
+    font-size: 17px;
     color: #00f6ff;
     font-family: "Furore";
     font-weight: 400;
@@ -123,11 +124,12 @@ body {
 }
 
 .menuButtonText img{
-    height: 30px;
+    height: 10px;
     margin-top: auto;
     margin-bottom: auto;
 }
 #startGameButton{
+    margin-bottom: 30px;
     -moz-user-select: auto; 
     -webkit-user-select: auto; 
     -ms-user-select: auto; 

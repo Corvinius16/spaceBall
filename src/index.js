@@ -189,8 +189,8 @@ function deathAnimation(){
     deathGif.src = "";
     deathGif.src = src;
     deathGif.classList.toggle("hide");
-    deathGif.style.left= pos.x - 170+"px";
-    deathGif.style.top = pos.y - 170 + "px";
+    deathGif.style.left= pos.x - 50+"px";
+    deathGif.style.top = pos.y - 50 + "px";
     timeSync.Reset();
     window.container.sphere.getThreeObject().visible =false;
     soundContainer.getSound("fail").play();
