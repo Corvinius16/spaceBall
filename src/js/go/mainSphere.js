@@ -25,6 +25,10 @@ class MainSphere  extends GameObject{
         document.addEventListener("touchstart",this.handleStart.bind(this),false);
         document.addEventListener("touchmove", this.handleMove.bind(this), false);
         document.addEventListener("touchend",this.handleEnd.bind(this),false);
+
+        document.addEventListener("mousedown",this.handleStart.bind(this),false);
+        document.addEventListener("mouseup",this.handleEnd.bind(this),false);
+        document.addEventListener("mousemove",this.handleMouseMove.bind(this),false);
        
     }
 
@@ -183,6 +187,32 @@ class MainSphere  extends GameObject{
         this.pos.set(0,0,0);
         this.newPos.set(0,0,0);
     }
+
+    handleMouseMove(event){
+        this.vec.set(( event.offsetX / window.innerWidth) * 2 - 1,
+        -( event.offsetY / window.innerHeight) * 2 + 1,0.5);
+        let camera = this.MainScene.getMainCamera().getThreeObject();
+        this.vec.unproject(camera);
+
+        this.vec.sub(camera.position).normalize();
+
+        var dist = (this.getThreeObject().position.z - camera.position.z)/this.vec.z;
+       
+        this.newPos.copy(camera.position).add(this.vec.multiplyScalar(dist));
+        if(this.pos.x !=0)
+        {
+        this.delta = this.newPos.x -this.pos.x;
+        }
+         this.pos.copy(this.newPos);
+        if(this.move){
+            if(this.object.position.x+this.delta>-1.35 && this.object.position.x+this.delta<1.35)
+            {
+                 this.object.position.x +=this.delta;
+            }
+           
+        }
+    }
+
     handleMove(event){
         this.vec.set(( event.targetTouches[0].pageX / window.innerWidth) * 2 - 1,
         -( event.targetTouches[0].pageY / window.innerHeight) * 2 + 1,0.5);
