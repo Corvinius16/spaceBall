@@ -26,7 +26,8 @@ class MainScene {
         this.setMainCamera(new MainCamera(this,"MainCamera"));
         this.gameObjects = [];
         this.gameObjects.push(this.camera);
-        this.renderer.setPixelRatio( 1 );
+        var ratio = window.devicePixelRatio || 1;
+        this.renderer.setPixelRatio(ratio  );
         this.renderer.setSize( window.innerWidth, window.innerHeight);
         
         document.body.appendChild(this.renderer.domElement);
