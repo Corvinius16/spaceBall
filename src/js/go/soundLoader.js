@@ -10,7 +10,7 @@ class SoundLoader  extends GameObject{
         this.listener = new THREE.AudioListener();
         const loader = new THREE.AudioLoader();
 
-        loader.load("sounds/Ambient5.mp3",function(t){
+        loader.load("./sounds/Ambient5.mp3",function(t){
             const sound = new THREE.Audio( thisObj.listener );
             sound.setBuffer(t);
             
@@ -18,26 +18,26 @@ class SoundLoader  extends GameObject{
             sound.setVolume(0.3);
             thisObj.loadedSound("ambient",sound);
         });
-        loader.load("sounds/Ambient5_1.mp3",function(t){
+        loader.load("./sounds/Ambient5_1.mp3",function(t){
             const sound = new THREE.Audio( thisObj.listener );
             sound.setBuffer(t);
             sound.setLoop(false);
             sound.setVolume(0.3);
             thisObj.loadedSound("ambient2",sound);
         });
-        loader.load("sounds/Bounce1.mp3",function(t){
+        loader.load("./sounds/Bounce1.mp3",function(t){
             const sound = new THREE.Audio( thisObj.listener );
             sound.setBuffer(t);
             sound.setVolume(1);
             thisObj.loadedSound("bounce1",sound);
         });
-        loader.load("sounds/Bounce2.mp3",function(t){
+        loader.load("./sounds/Bounce2.mp3",function(t){
             const sound = new THREE.Audio( thisObj.listener );
             sound.setBuffer(t);
             sound.setVolume(1);
             thisObj.loadedSound("bounce2",sound);
         });
-        loader.load("sounds/fail.mp3",function(t){
+        loader.load("./sounds/fail.mp3",function(t){
             const sound = new THREE.Audio( thisObj.listener );
             sound.setBuffer(t);
             sound.setVolume(1);

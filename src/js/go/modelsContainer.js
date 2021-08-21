@@ -10,13 +10,13 @@ class ModelLoader  extends GameObject{
         const loader2 = new GLTFLoader();
 
         let thisObj = this;
-        loader2.load("models/Platform.glb",function(obj){
+        loader2.load("./models/Platform.glb",function(obj){
             let object=obj.scene.children[0].children[0];//new THREE.InstancedMesh(obj.children[0].geometry,new THREE.MeshBasicMaterial(),100);
             object.scale.set(1,1,1);
             object.receiveShadow = true;
             thisObj.setModel("platform2",object);
         });
-        loader2.load("models/Ball.glb",function(obj){
+        loader2.load("./models/Ball.glb",function(obj){
          
             let object=obj.scene.children[0].children[0];//new THREE.InstancedMesh(obj.children[0].geometry,new THREE.MeshBasicMaterial(),100);
             object.castShadow = true;
@@ -24,13 +24,13 @@ class ModelLoader  extends GameObject{
             thisObj.setModel("ball",object);
          
         });
-        loader2.load("models/Barrier.glb",function(obj){
+        loader2.load("./models/Barrier.glb",function(obj){
             let object=obj.scene.children[0].children[0];//new THREE.InstancedMesh(obj.children[0].geometry,new THREE.MeshBasicMaterial(),100);
             object.scale.set(1,1,1);
            object.geometry.computeBoundingBox();
             thisObj.setModel("barr",object);
         });
-        loader2.load("models/Aim.glb",function(obj){
+        loader2.load("./models/Aim.glb",function(obj){
             let object=obj.scene.children[0].children[0];//new THREE.InstancedMesh(obj.children[0].geometry,new THREE.MeshBasicMaterial(),100);
             object.scale.set(1,1,1);
             object.geometry.computeBoundingBox();

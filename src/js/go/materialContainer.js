@@ -11,10 +11,10 @@ class MaterialLoader  extends GameObject{
 
         const loader = new THREE.TextureLoader();
 
-        loader.load("textures/diffuse.png",function(t){
+        loader.load("./textures/diffuse.png",function(t){
             thisObj.loadedTexture("base",t);
         });
-        loader.load("textures/texture_master_mat_Emissive.png",function(t){
+        loader.load("./textures/texture_master_mat_Emissive.png",function(t){
             thisObj.loadedTexture("emmisive",t);
         })
 
