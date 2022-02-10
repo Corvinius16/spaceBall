@@ -9,6 +9,7 @@ let far = 30;
 
 function createCamera(){
     const camera = new THREE.PerspectiveCamera(fov, aspect, near, far );
+
     return camera;
 }
 

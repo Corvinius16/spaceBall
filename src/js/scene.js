@@ -29,7 +29,12 @@ class MainScene {
         var ratio = window.devicePixelRatio || 1;
         this.renderer.setPixelRatio(ratio  );
         this.renderer.setSize( window.innerWidth, window.innerHeight);
-        
+        window.addEventListener("resize",function(){
+            
+            thisScene.renderer.setSize( window.innerWidth, window.innerHeight);
+            thisScene.camera.camera.aspect =  window.innerWidth/ window.innerHeight;
+            thisScene.camera.camera.updateProjectionMatrix();
+        })
         document.body.appendChild(this.renderer.domElement);
         var clock = new THREE.Clock();
         this.deltaTime = 0;

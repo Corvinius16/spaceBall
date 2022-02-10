@@ -17,6 +17,7 @@ class MainSphere  extends GameObject{
         this.move = false;
         this.fromY = 0.5;
         this.toY = 2;
+        this.movePultValue  = 0;
         this.gameOver = gameOver;
         this.countRotation = 2;
         this.tutorHtml = document.querySelector(".tutorGif");
@@ -29,7 +30,55 @@ class MainSphere  extends GameObject{
         document.addEventListener("mousedown",this.handleStart.bind(this),false);
         document.addEventListener("mouseup",this.handleEnd.bind(this),false);
         document.addEventListener("mousemove",this.handleMouseMove.bind(this),false);
+
+
+        this.initPult();
+          
        
+    }
+    initPult(){
+        window.addEventListener('keydown', (event) => {
+            switch(event.code) {
+               case 'ArrowLeft':
+                    this.handlePultStart();
+                    this.movePultValue  = -0.15;
+                break;
+               case 'ArrowRight':
+                    this.handlePultStart();
+                    this.movePultValue  = 0.15;
+                break;
+                case "KeyA":
+                    this.handlePultStart();
+                    this.movePultValue  = -0.15;
+                    break;
+                case "KeyD":
+                    this.handlePultStart();
+                    this.movePultValue  = 0.15;
+                    break;
+
+            }
+          });
+          window.addEventListener('keyup', (event) => {
+            switch(event.code) {
+               case 'ArrowLeft':
+                    this.handlePultStop();
+                    this.movePultValue  = 0;
+                break;
+               case 'ArrowRight':
+                    this.handlePultStop();
+                    this.movePultValue  =0;
+                break;
+                case "KeyA":
+                    this.handlePultStop();
+                    this.movePultValue  =0;
+                    break;
+                case "KeyD":
+                    this.handlePultStop();
+                    this.movePultValue  = 0;
+                    break;
+
+            }
+          });
     }
 
     completeInit(){
@@ -38,6 +87,15 @@ class MainSphere  extends GameObject{
         obj.material = window.container.materialContainer.getMaterial("test").clone();
         this.setThreeObject(obj);
         this.MainScene.addObject(this);
+    }
+
+
+    handlePultStart(){
+        this.move = true;
+    }
+
+    handlePultStop(){
+        this.move = false;
     }
 
 
@@ -72,6 +130,9 @@ class MainSphere  extends GameObject{
      }
 
     sync(valueLerp){
+        if(this.move){
+            this.handlePult();
+        }
         if(valueLerp<0.3){
             let LerpY = this.lerp(0,1,valueLerp/0.3);
             this.getThreeObject().position.y = this.lerp(this.fromY,this.toY,LerpY);
@@ -165,7 +226,24 @@ class MainSphere  extends GameObject{
          }
       
     }
-
+    handlePult(){
+        this.newPos.copy(this.pos);
+        this.newPos.setX(this.newPos.x+this.movePultValue);
+        if(this.pos.x !=0)
+        {
+           
+            this.delta = this.newPos.x -this.pos.x;
+        }
+         this.pos.copy(this.newPos);
+        if(this.move)
+        {
+            if(this.object.position.x+this.delta>-1.35 && this.object.position.x+this.delta<1.35)
+            {
+                this.object.position.x +=this.delta;
+            }
+        }
+           
+    }
     lerp(start, end, t) {
         return start * (1 - t) + end * t;
     }

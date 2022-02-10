@@ -16,17 +16,13 @@ import {Container} from "./js/go/Container";
 import {ModelLoader} from "./js/go/modelsContainer";
 import {MaterialLoader} from "./js/go/materialContainer";
 import {SoundLoader} from "./js/go/soundLoader";
-import bridge from '@vkontakte/vk-bridge';
 import {UrlParser} from "./js/helpers/UrlParser"
 import {Record} from "./js/go/record";
-import {VKApi} from "./js/helpers/vkApi";
-bridge.send('VKWebAppInit', {});
 
 
 
 
 let scene = new MainScene();
-let vkApi = new VKApi(bridge);
 let deathGif = document.querySelector(".death");
 let timeSync;
 let lineFabric;
@@ -65,7 +61,6 @@ function initEnvironment(){
     staticObject.soundContainer = soundContainer;
     staticObject.materialContainer = materialContainer;
     staticObject.modelContainer = modelContainer;
-    staticObject.vkBridge = bridge;
    
     loader = new LoaderObject(startGame);
     score = new Score(scene,"score",sphere);
@@ -108,26 +103,21 @@ let loaderGif = document.querySelector(".loader");
 let recordHtml = document.querySelector("#record");
 let scoreHtml = document.querySelector(".scoreContainer");
 let tutorHtml = document.querySelector(".tutorGif");
+let isGaming = true;
+window.addEventListener('keydown', (event) => {
+    switch(event.code) {
+       case 'Enter':
+           if(!isGaming)
+           {
+            Start();
+           }
+       break;
+    }
+  });
 
-
-let addtoFav = document.querySelector("#addToFavorites");
-let invFr = document.querySelector("#inviteFriends");
-let addtoWall = document.querySelector("#addToWall");
-
-if(parser.getParam("vk_is_favorite") == 1){
-    addtoFav.classList.add("hide");
-}
-addtoWall.addEventListener("click",function(){
-    vkApi.addToWall(recordController.recordValue)
-})
-invFr.addEventListener("click",function(){
-    vkApi.inviteFriends();
-})
-addtoFav.addEventListener("click",function(){
-    vkApi.addToFavorite();
-})
 function startGame(){
     loaderGif.classList.add("hide");
+    isGaming=false;
     bCon.classList.remove("hide");
     recordHtml.innerHTML = recordController.recordValue;
     startButtonGame.addEventListener("click",Start);
@@ -152,6 +142,7 @@ function newAudioSecond(){
 }
 
 function Start(){
+    isGaming = true;
     menu.classList.toggle("hide");
     scoreHtml.classList.toggle("hide");
     sphere.play = true;
@@ -226,15 +217,10 @@ function deathAnimation(){
     },1000);
 }
 function clearAll(){
-
+    isGaming =false;
     recordController.setNewRecord(score.score);
     recordHtml.innerHTML = recordController.recordValue;
     scoreHtml.classList.toggle("hide");
-    if(recordController.showAds){
-        recordController.showAds = false;
-        bridge.send("VKWebAppShowNativeAds", {ad_format:"preloader"}).then(data => console.log(data.result))
-        .catch(error => console.log(error));
-    }
   
     timeSync.Reset();
     timeSync.addObject(lineFabric);
