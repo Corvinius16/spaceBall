@@ -1,1 +1,1 @@
-Created by Alexey Pavlov, Alexey Sarafavon, Alina Krol, Alexandr Zhdanov
+Created by Alexey Pavlov, Alexey Sarafanov, Alina Krol, Alexandr Zhdanov
